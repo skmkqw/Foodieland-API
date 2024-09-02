@@ -13,6 +13,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Foodieland.Application\Foodieland.Application.csproj" />
       <ProjectReference Include="..\Foodieland.Contracts\Foodieland.Contracts.csproj" />
+      <ProjectReference Include="..\Foodieland.Infrastructure\Foodieland.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
