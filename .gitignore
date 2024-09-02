@@ -1,5 +1,6 @@
 [Oo]bj
 [Bb]in
+.idea
 *.user
 *.suo
 *.[Cc]ache
