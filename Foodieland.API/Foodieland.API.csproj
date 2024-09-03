@@ -5,9 +5,15 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\Foodieland.Application\Foodieland.Application.csproj" />
+      <ProjectReference Include="..\Foodieland.Contracts\Foodieland.Contracts.csproj" />
+      <ProjectReference Include="..\Foodieland.Infrastructure\Foodieland.Infrastructure.csproj" />
+    </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+      <Folder Include="Controllers\" />
     </ItemGroup>
 
 </Project>
