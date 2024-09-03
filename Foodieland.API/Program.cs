@@ -1,9 +1,11 @@
-using Foodieland.Application.Services.Authentication;
+using Foodieland.Application;
+using Foodieland.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services.AddControllers();
-    builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+    builder.Services.AddApplication();
+    builder.Services.AddInfrastructure();
 }
 
 
