@@ -1,11 +1,17 @@
-var builder = WebApplication.CreateBuilder(args);
+using Foodieland.Application.Services.Authentication;
 
-builder.Services.AddControllers();
+var builder = WebApplication.CreateBuilder(args);
+{
+    builder.Services.AddControllers();
+    builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+}
+
 
 var app = builder.Build();
+{
+    app.UseHttpsRedirection();
 
-app.UseHttpsRedirection();
+    app.MapControllers();
 
-app.MapControllers();
-
-app.Run();
+    app.Run();
+}
