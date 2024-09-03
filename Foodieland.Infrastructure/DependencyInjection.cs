@@ -1,6 +1,9 @@
 using Foodieland.Application.Common.Interfaces;
-using Foodieland.Application.Common.Services;
+using Foodieland.Application.Common.Interfaces.Authentication;
+using Foodieland.Application.Common.Interfaces.Persistence;
+using Foodieland.Application.Common.Interfaces.Services;
 using Foodieland.Infrastructure.Authentication;
+using Foodieland.Infrastructure.Percistence;
 using Foodieland.Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +17,7 @@ public static class DependencyInjection
         services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+        services.AddScoped<IUserRepository, UserRepository>();
         return services;
     }
 }
