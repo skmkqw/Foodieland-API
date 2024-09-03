@@ -1,4 +1,4 @@
-namespace Foodieland.Application.Common.Services;
+namespace Foodieland.Application.Common.Interfaces.Services;
 
 public interface IDateTimeProvider
 {
