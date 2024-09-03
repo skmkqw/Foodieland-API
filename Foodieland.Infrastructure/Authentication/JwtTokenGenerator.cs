@@ -2,12 +2,20 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Foodieland.Application.Common.Interfaces;
+using Foodieland.Application.Common.Services;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Foodieland.Infrastructure.Authentication;
 
 public class JwtTokenGenerator : IJwtTokenGenerator
 {
+    private readonly IDateTimeProvider _dateTimeProvider;
+
+    public JwtTokenGenerator(IDateTimeProvider dateTimeProvider)
+    {
+        _dateTimeProvider = dateTimeProvider;
+    }
+
     public string GenerateToken(Guid userId, string firstName, string lastName)
     {
         var signingCredentials = new SigningCredentials(
@@ -27,7 +35,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
             claims: claims, 
             signingCredentials: signingCredentials, 
             issuer: "Foodieland",
-            expires: DateTime.Now.AddDays(1));
+            expires: _dateTimeProvider.UtcNow.AddDays(1));
         
         return new JwtSecurityTokenHandler().WriteToken(securityToken);
     }
