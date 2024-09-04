@@ -1,6 +1,6 @@
 using Foodieland.Domain.Entities;
 
-namespace Foodieland.Application.Services.Authentication;
+namespace Foodieland.Application.Services.Authentication.Common;
 
 public record AuthenticationResult(
     User User,
