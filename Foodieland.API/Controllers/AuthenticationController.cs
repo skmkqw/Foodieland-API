@@ -1,5 +1,8 @@
 using ErrorOr;
 using Foodieland.Application.Services.Authentication;
+using Foodieland.Application.Services.Authentication.Commands;
+using Foodieland.Application.Services.Authentication.Common;
+using Foodieland.Application.Services.Authentication.Queries;
 using Foodieland.Contracts.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using LoginRequest = Foodieland.Contracts.Authentication.LoginRequest;
@@ -9,17 +12,19 @@ namespace Foodieland.API.Controllers;
 [Route("auth")]
 public class AuthenticationController : ApiController
 {
-    private readonly IAuthenticationService _authenticationService;
+    private readonly IAuthenticationCommandService _authenticationCommandService;
+    private readonly IAuthenticationQueryService _authenticationQueryService;
 
-    public AuthenticationController(IAuthenticationService authenticationService)
+    public AuthenticationController(IAuthenticationCommandService authenticationCommandService, IAuthenticationQueryService authenticationQueryService)
     {
-        _authenticationService = authenticationService;
+        _authenticationCommandService = authenticationCommandService;
+        _authenticationQueryService = authenticationQueryService;
     }
 
     [HttpPost("register")]
     public IActionResult Register(RegisterRequest request)
     {
-        ErrorOr<AuthenticationResult> authResult = _authenticationService.Register(
+        ErrorOr<AuthenticationResult> authResult = _authenticationCommandService.Register(
             request.FirstName, 
             request.LastName, 
             request.Email, 
@@ -44,7 +49,7 @@ public class AuthenticationController : ApiController
     [HttpPost("login")]
     public IActionResult Login(LoginRequest request)
     {
-        ErrorOr<AuthenticationResult> authResult = _authenticationService.Login(
+        ErrorOr<AuthenticationResult> authResult = _authenticationQueryService .Login(
             request.Email, 
             request.Password);
 
