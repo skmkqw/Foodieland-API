@@ -2,6 +2,7 @@ using Foodieland.Application.Authentication.Commands.Register;
 using Foodieland.Application.Authentication.Common;
 using Foodieland.Application.Authentication.Queries.Login;
 using Foodieland.Contracts.Authentication;
+using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using LoginRequest = Foodieland.Contracts.Authentication.LoginRequest;
@@ -12,21 +13,22 @@ namespace Foodieland.API.Controllers;
 public class AuthenticationController : ApiController
 {
     private readonly ISender _mediator;
-    public AuthenticationController(ISender mediator)
+    private readonly IMapper _mapper;
+    public AuthenticationController(ISender mediator, IMapper mapper)
     {
         _mediator = mediator;
+        _mapper = mapper;
     }
 
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterRequest request)
     {
-        var command = new RegisterCommand(request.FirstName, request.LastName, request.Email, request.Password);
+        var command = _mapper.Map<RegisterCommand>(request);
         
         var authResult = await _mediator.Send(command);
-          
         
         return authResult.Match(
-            result => Ok(MapAuthResponse(result)),
+            result => Ok(_mapper.Map<AuthenticationResponse>(result)),
             errors => Problem(errors)
             );
     }
@@ -44,12 +46,12 @@ public class AuthenticationController : ApiController
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginRequest request)
     {
-        var query = new LoginQuery(request.Email, request.Password);
+        var query = _mapper.Map<LoginQuery>(request);
         
         var authResult = await _mediator.Send(query);
 
         return authResult.Match(
-            result => Ok(MapAuthResponse(result)),
+            result => Ok(_mapper.Map<AuthenticationResponse>(result)),
             errors => Problem(errors)
             );
     }
