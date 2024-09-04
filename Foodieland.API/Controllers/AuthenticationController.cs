@@ -6,9 +6,8 @@ using LoginRequest = Foodieland.Contracts.Authentication.LoginRequest;
 
 namespace Foodieland.API.Controllers;
 
-[ApiController]
 [Route("auth")]
-public class AuthenticationController : ControllerBase
+public class AuthenticationController : ApiController
 {
     private readonly IAuthenticationService _authenticationService;
 
@@ -26,9 +25,9 @@ public class AuthenticationController : ControllerBase
             request.Email, 
             request.Password);
         
-        return authResult.MatchFirst(
+        return authResult.Match(
             result => Ok(MapAuthResponse(result)),
-            firstError => Problem(statusCode: StatusCodes.Status409Conflict, title: firstError.Description)
+            errors => Problem(errors)
             );
     }
 
@@ -49,9 +48,9 @@ public class AuthenticationController : ControllerBase
             request.Email, 
             request.Password);
 
-        return authResult.MatchFirst(
-            result => Ok(MapAuthResponse(result)), 
-            firstError => Problem(statusCode: StatusCodes.Status401Unauthorized, title: firstError.Description))
-            ;
+        return authResult.Match(
+            result => Ok(MapAuthResponse(result)),
+            errros => Problem(errros)
+            );
     }
 }
