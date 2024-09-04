@@ -1,3 +1,4 @@
+using ErrorOr;
 using Foodieland.Application.Services.Authentication;
 using Foodieland.Contracts.Authentication;
 using Microsoft.AspNetCore.Mvc;
@@ -19,36 +20,38 @@ public class AuthenticationController : ControllerBase
     [HttpPost("register")]
     public IActionResult Register(RegisterRequest request)
     {
-        var authResult = _authenticationService.Register(
+        ErrorOr<AuthenticationResult> authResult = _authenticationService.Register(
             request.FirstName, 
             request.LastName, 
             request.Email, 
             request.Password);
+        
+        return authResult.MatchFirst(
+            result => Ok(MapAuthResponse(result)),
+            firstError => Problem(statusCode: StatusCodes.Status409Conflict, title: firstError.Description)
+            );
+    }
 
-        var response = new AuthenticationResponse(
+    private static AuthenticationResponse MapAuthResponse(AuthenticationResult authResult)
+    {
+        return new AuthenticationResponse(
             authResult.User.Id,
             authResult.User.FirstName,
             authResult.User.LastName,
             authResult.User.Email,
             authResult.Token);
-        
-        return Ok(response);
     }
-    
+
     [HttpPost("login")]
     public IActionResult Login(LoginRequest request)
     {
-        var authResult = _authenticationService.Login(
+        ErrorOr<AuthenticationResult> authResult = _authenticationService.Login(
             request.Email, 
             request.Password);
 
-        var response = new AuthenticationResponse(
-            authResult.User.Id,
-            authResult.User.FirstName,
-            authResult.User.LastName,
-            authResult.User.Email,
-            authResult.Token);
-        
-        return Ok(response);
+        return authResult.MatchFirst(
+            result => Ok(MapAuthResponse(result)), 
+            firstError => Problem(statusCode: StatusCodes.Status401Unauthorized, title: firstError.Description))
+            ;
     }
 }
