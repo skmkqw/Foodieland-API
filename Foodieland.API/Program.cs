@@ -1,4 +1,6 @@
-using Foodieland.API.Middleware;
+// using Foodieland.API.Middleware;
+
+using Foodieland.API.Filters;
 using Foodieland.Application;
 using Foodieland.Infrastructure;
 
@@ -12,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
 {
-    app.UseMiddleware<ExceptionHandlingMiddleware>();
+    // app.UseMiddleware<ExceptionHandlingMiddleware>();
     
     app.UseHttpsRedirection();
 
