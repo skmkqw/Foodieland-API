@@ -1,12 +1,9 @@
-// using Foodieland.API.Middleware;
-
-using Foodieland.API.Filters;
 using Foodieland.Application;
 using Foodieland.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 {
-    builder.Services.AddControllers(options => options.Filters.Add<ErrorHandlingFilterAttribute>());
+    builder.Services.AddControllers();
     builder.Services.AddApplication();
     builder.Services.AddInfrastructure(builder.Configuration);
 }
