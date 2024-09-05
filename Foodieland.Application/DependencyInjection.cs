@@ -1,4 +1,6 @@
+using System.Reflection;
 using ErrorOr;
+using FluentValidation;
 using Foodieland.Application.Authentication.Commands.Register;
 using Foodieland.Application.Authentication.Common;
 using Foodieland.Application.Common.Behaviors;
@@ -13,6 +15,7 @@ public static class DependencyInjection
     {
         services.AddMediatR(cfg=>cfg.RegisterServicesFromAssemblies(typeof(DependencyInjection).Assembly));
         services.AddScoped<IPipelineBehavior<RegisterCommand, ErrorOr<AuthenticationResult>>, ValidateRegisterCommandBehavior>();
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         return services;
     }
 }
