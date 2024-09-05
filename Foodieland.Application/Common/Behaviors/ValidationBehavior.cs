@@ -1,26 +1,26 @@
 using ErrorOr;
 using FluentValidation;
-using Foodieland.Application.Authentication.Commands.Register;
-using Foodieland.Application.Authentication.Common;
 using MediatR;
 
 namespace Foodieland.Application.Common.Behaviors;
 
-public class ValidateRegisterCommandBehavior : IPipelineBehavior<RegisterCommand, ErrorOr<AuthenticationResult>>
+public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> 
+    where TRequest : IRequest<TResponse> 
+    where TResponse : IErrorOr
 {
-    private readonly IValidator<RegisterCommand> _validator;
+    private readonly IValidator<TRequest>? _validator;
 
-    public ValidateRegisterCommandBehavior(IValidator<RegisterCommand> validator)
+    public ValidationBehavior(IValidator<TRequest>? validator = null)
     {
         _validator = validator;
     }
 
-    public async Task<ErrorOr<AuthenticationResult>> Handle(
-        RegisterCommand request, 
-        RequestHandlerDelegate<ErrorOr<AuthenticationResult>> next, 
-        CancellationToken cancellationToken)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        var validationResult = await _validator.ValidateAsync(request);
+        if (_validator is null)
+            return await next();
+        
+        var validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
         if (validationResult.IsValid)
         {
@@ -31,6 +31,6 @@ public class ValidateRegisterCommandBehavior : IPipelineBehavior<RegisterCommand
             .Select(e => Error.Validation(e.PropertyName, e.ErrorMessage))
             .ToList();
         
-        return errors;
+        return (dynamic)errors;
     }
 }
