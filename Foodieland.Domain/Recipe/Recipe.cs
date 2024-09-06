@@ -2,6 +2,7 @@ using Foodieland.Domain.Common.Models;
 using Foodieland.Domain.Ingredient.ValueObjects;
 using Foodieland.Domain.Recipe.Entities;
 using Foodieland.Domain.Recipe.ValueObjects;
+using Foodieland.Domain.User.ValueObjects;
 
 namespace Foodieland.Domain.Recipe;
 
@@ -12,6 +13,8 @@ public sealed class Recipe : AggregateRoot<RecipeId>
     public string Description { get; }
 
     public int TimeToCook { get; }
+    
+    public UserId CreatorId { get; }
     
     public IReadOnlyList<CookingDirection> Directions => _directions.AsReadOnly();
     
@@ -25,16 +28,17 @@ public sealed class Recipe : AggregateRoot<RecipeId>
     
     private readonly List<IngredientId> _ingredientIds = new();
     
-    private Recipe(RecipeId id, string name, string description, int timeToCook) : base(id)
+    private Recipe(RecipeId id, string name, string description, int timeToCook, UserId creatorId) : base(id)
     {
         Name = name;
         Description = description;
         TimeToCook = timeToCook;
+        CreatorId = creatorId;
     }
 
-    public static Recipe Create(string name, string description, int timeToCook)
+    public static Recipe Create(string name, string description, int timeToCook, UserId creatorId)
     {
-        return new Recipe(RecipeId.CreateUnique(), name, description, timeToCook);
+        return new Recipe(RecipeId.CreateUnique(), name, description, timeToCook, creatorId);
     }
 
     public void AddNutritionInformation(NutritionInformation nutritionInformation)
