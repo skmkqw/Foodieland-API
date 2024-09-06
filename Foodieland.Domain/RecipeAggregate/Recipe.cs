@@ -31,9 +31,9 @@ public sealed class Recipe : AggregateRoot<RecipeId>
 
     private NutritionInformation? _nutritionInformation;
 
-    private readonly List<CookingDirection> _directions = new();
+    private readonly List<CookingDirection> _directions;
     
-    private readonly List<IngredientId> _ingredientIds = new();
+    private readonly List<IngredientId> _ingredientIds;
     
     private readonly List<ReviewId> _reviewIds = new();
     
@@ -43,7 +43,10 @@ public sealed class Recipe : AggregateRoot<RecipeId>
         int timeToCook,
         UserId creatorId,
         DateTime createdDateTime,
-        DateTime updateDateTime) : base(id)
+        DateTime updateDateTime, 
+        NutritionInformation? nutritionInformation,
+        List<CookingDirection> cookingDirections,
+        List<IngredientId> ingredientIds) : base(id)
     {
         Name = name;
         Description = description;
@@ -51,9 +54,18 @@ public sealed class Recipe : AggregateRoot<RecipeId>
         CreatorId = creatorId;
         CreatedDateTime = createdDateTime;
         UpdateDateTime = updateDateTime;
+        _nutritionInformation = nutritionInformation;
+        _directions = cookingDirections;
+        _ingredientIds = ingredientIds;
     }
 
-    public static Recipe Create(string name, string description, int timeToCook, UserId creatorId)
+    public static Recipe Create(string name,
+        string description,
+        int timeToCook,
+        UserId creatorId,
+        NutritionInformation nutritionInformation,
+        List<CookingDirection> cookingDirections,
+        List<IngredientId> ingredientIds)
     {
         return new Recipe(RecipeId.CreateUnique(),
             name,
@@ -61,6 +73,9 @@ public sealed class Recipe : AggregateRoot<RecipeId>
             timeToCook,
             creatorId,
             DateTime.UtcNow,
-            DateTime.UtcNow);
+            DateTime.UtcNow,
+            nutritionInformation,
+            cookingDirections,
+            ingredientIds);
     }
 }
