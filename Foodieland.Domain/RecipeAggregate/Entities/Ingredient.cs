@@ -18,7 +18,7 @@ public class Ingredient : Entity<IngredientId>
         Unit = unit;
     }
 
-    public static Ingredient Create(IngredientId id, string name, float quantity, string unit)
+    public static Ingredient Create(string name, float quantity, string unit)
     {
         return new Ingredient(IngredientId.CreateUnique(), name, quantity, unit);
     }
