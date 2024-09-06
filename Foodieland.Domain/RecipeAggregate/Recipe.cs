@@ -62,7 +62,7 @@ public sealed class Recipe : AggregateRoot<RecipeId>
         UserId creatorId,
         NutritionInformation nutritionInformation,
         List<CookingDirection> cookingDirections,
-        List<Ingredient> ingredientIds)
+        List<Ingredient> ingredients)
     {
         return new Recipe(RecipeId.CreateUnique(),
             name,
@@ -73,6 +73,6 @@ public sealed class Recipe : AggregateRoot<RecipeId>
             DateTime.UtcNow,
             nutritionInformation,
             cookingDirections,
-            ingredientIds);
+            ingredients);
     }
 }
