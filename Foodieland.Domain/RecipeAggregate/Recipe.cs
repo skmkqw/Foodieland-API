@@ -1,5 +1,4 @@
 using Foodieland.Domain.Common.Models;
-using Foodieland.Domain.IngredientAggregate.ValueObjects;
 using Foodieland.Domain.RecipeAggregate.Entities;
 using Foodieland.Domain.RecipeAggregate.ValueObjects;
 using Foodieland.Domain.ReviewAggregate.ValueObjects;
@@ -25,13 +24,13 @@ public sealed class Recipe : AggregateRoot<RecipeId>
     
     public IReadOnlyList<CookingDirection> Directions => _directions.AsReadOnly();
     
-    public IReadOnlyList<IngredientId> IngredientsIds => _ingredientIds.AsReadOnly();
+    public IReadOnlyList<Ingredient> Ingredients => _ingredients.AsReadOnly();
     
     public IReadOnlyList<ReviewId> ReviewIds => _reviewIds.AsReadOnly();
 
     private readonly List<CookingDirection> _directions;
     
-    private readonly List<IngredientId> _ingredientIds;
+    private readonly List<Ingredient> _ingredients;
     
     private readonly List<ReviewId> _reviewIds = new();
     
@@ -44,7 +43,7 @@ public sealed class Recipe : AggregateRoot<RecipeId>
         DateTime updateDateTime, 
         NutritionInformation nutritionInformation,
         List<CookingDirection> cookingDirections,
-        List<IngredientId> ingredientIds) : base(id)
+        List<Ingredient> ingredients) : base(id)
     {
         Name = name;
         Description = description;
@@ -54,7 +53,7 @@ public sealed class Recipe : AggregateRoot<RecipeId>
         UpdateDateTime = updateDateTime;
         NutritionInformation = nutritionInformation;
         _directions = cookingDirections;
-        _ingredientIds = ingredientIds;
+        _ingredients = ingredients;
     }
 
     public static Recipe Create(string name,
@@ -63,7 +62,7 @@ public sealed class Recipe : AggregateRoot<RecipeId>
         UserId creatorId,
         NutritionInformation nutritionInformation,
         List<CookingDirection> cookingDirections,
-        List<IngredientId> ingredientIds)
+        List<Ingredient> ingredientIds)
     {
         return new Recipe(RecipeId.CreateUnique(),
             name,

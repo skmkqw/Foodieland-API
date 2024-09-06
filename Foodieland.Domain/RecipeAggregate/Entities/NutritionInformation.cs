@@ -9,15 +9,15 @@ public sealed class NutritionInformation : Entity<NutritionInformationId>
     
     public float Fat { get; }
     
-    public float Carbohydrates { get; }
+    public float Carbs { get; }
     
     public float Protein { get; }
 
-    private NutritionInformation(NutritionInformationId id, int calories, float fat, float carbohydrates, float protein) : base(id)
+    private NutritionInformation(NutritionInformationId id, int calories, float fat, float carbs, float protein) : base(id)
     {
         Calories = calories;
         Fat = fat;
-        Carbohydrates = carbohydrates;
+        Carbs = carbs;
         Protein = protein;
     }
 
