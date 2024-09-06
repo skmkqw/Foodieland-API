@@ -21,7 +21,7 @@ public sealed class NutritionInformation : Entity<NutritionInformationId>
         Protein = protein;
     }
 
-    public static NutritionInformation CreateNew(int calories, float fat, float carbohydrates, float protein)
+    public static NutritionInformation Create(int calories, float fat, float carbohydrates, float protein)
     {
         return new NutritionInformation(NutritionInformationId.CreateUnique(), calories, fat, carbohydrates, protein);
     }
