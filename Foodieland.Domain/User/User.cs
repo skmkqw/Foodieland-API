@@ -1,4 +1,5 @@
 using Foodieland.Domain.Common.Models;
+using Foodieland.Domain.Recipe.ValueObjects;
 using Foodieland.Domain.Review.ValueObjects;
 using Foodieland.Domain.User.ValueObjects;
 
@@ -16,7 +17,15 @@ public sealed class User : AggregateRoot<UserId>
     
     public IReadOnlyList<ReviewId> ReviewIds => _reviewIds.AsReadOnly();
     
+    public IReadOnlyList<RecipeId> RecipeIds => _recipes.AsReadOnly();
+    
+    public IReadOnlyList<RecipeId> LikedRecipes => _likedRecipes.AsReadOnly();
+    
     private readonly List<ReviewId> _reviewIds = new();
+    
+    private readonly List<RecipeId> _recipes = new();
+    
+    private readonly List<RecipeId> _likedRecipes = new();
     
     private User(UserId id, string firstName, string lastName, string email, string password) : base(id)
     {
