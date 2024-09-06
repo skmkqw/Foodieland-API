@@ -1,6 +1,6 @@
 using Foodieland.Domain.Common.Models;
 
-namespace Foodieland.Domain.User.ValueObjects;
+namespace Foodieland.Domain.UserAggregate.ValueObjects;
 
 public class UserId : ValueObject
 {

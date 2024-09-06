@@ -1,6 +1,6 @@
 using Foodieland.Domain.Common.Models;
 
-namespace Foodieland.Domain.Ingredient.ValueObjects;
+namespace Foodieland.Domain.IngredientAggregate.ValueObjects;
 
 public class IngredientId : ValueObject
 {

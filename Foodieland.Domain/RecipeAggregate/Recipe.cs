@@ -1,11 +1,11 @@
 using Foodieland.Domain.Common.Models;
-using Foodieland.Domain.Ingredient.ValueObjects;
-using Foodieland.Domain.Recipe.Entities;
-using Foodieland.Domain.Recipe.ValueObjects;
-using Foodieland.Domain.Review.ValueObjects;
-using Foodieland.Domain.User.ValueObjects;
+using Foodieland.Domain.IngredientAggregate.ValueObjects;
+using Foodieland.Domain.RecipeAggregate.Entities;
+using Foodieland.Domain.RecipeAggregate.ValueObjects;
+using Foodieland.Domain.ReviewAggregate.ValueObjects;
+using Foodieland.Domain.UserAggregate.ValueObjects;
 
-namespace Foodieland.Domain.Recipe;
+namespace Foodieland.Domain.RecipeAggregate;
 
 public sealed class Recipe : AggregateRoot<RecipeId>
 {

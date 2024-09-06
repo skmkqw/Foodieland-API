@@ -1,7 +1,7 @@
 using Foodieland.Domain.Common.Models;
-using Foodieland.Domain.Recipe.ValueObjects;
+using Foodieland.Domain.RecipeAggregate.ValueObjects;
 
-namespace Foodieland.Domain.Recipe.Entities;
+namespace Foodieland.Domain.RecipeAggregate.Entities;
 
 public sealed class NutritionInformation : Entity<NutritionInformationId>
 {

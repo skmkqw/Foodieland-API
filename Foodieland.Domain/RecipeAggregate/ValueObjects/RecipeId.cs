@@ -1,19 +1,19 @@
 using Foodieland.Domain.Common.Models;
 
-namespace Foodieland.Domain.Review.ValueObjects;
+namespace Foodieland.Domain.RecipeAggregate.ValueObjects;
 
-public class ReviewId : ValueObject
+public class RecipeId : ValueObject
 {
     public Guid Value { get; }
 
-    private ReviewId(Guid value)
+    private RecipeId(Guid value)
     {
         Value = value;
     }
 
-    public static ReviewId CreateUnique()
+    public static RecipeId CreateUnique()
     {
-        return new ReviewId(Guid.NewGuid());
+        return new RecipeId(Guid.NewGuid());
     }
     
     protected override IEnumerable<object> GetEqualityComponents()

@@ -1,7 +1,7 @@
 using Foodieland.Domain.Common.Models;
-using Foodieland.Domain.Ingredient.ValueObjects;
+using Foodieland.Domain.IngredientAggregate.ValueObjects;
 
-namespace Foodieland.Domain.Ingredient;
+namespace Foodieland.Domain.IngredientAggregate;
 
 public sealed class Ingredient : AggregateRoot<IngredientId>
 {

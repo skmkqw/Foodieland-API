@@ -1,9 +1,9 @@
 using Foodieland.Domain.Common.Models;
-using Foodieland.Domain.Recipe.ValueObjects;
-using Foodieland.Domain.Review.ValueObjects;
-using Foodieland.Domain.User.ValueObjects;
+using Foodieland.Domain.RecipeAggregate.ValueObjects;
+using Foodieland.Domain.ReviewAggregate.ValueObjects;
+using Foodieland.Domain.UserAggregate.ValueObjects;
 
-namespace Foodieland.Domain.User;
+namespace Foodieland.Domain.UserAggregate;
 
 public sealed class User : AggregateRoot<UserId>
 {
