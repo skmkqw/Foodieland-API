@@ -1,6 +1,6 @@
 using Foodieland.Domain.Common.Models;
 
-namespace Foodieland.Domain.Recipe.ValueObjects;
+namespace Foodieland.Domain.RecipeAggregate.ValueObjects;
 
 public class CookingDirectionId : ValueObject
 {

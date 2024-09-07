@@ -4,12 +4,14 @@ using Foodieland.Application.Authentication.Queries.Login;
 using Foodieland.Contracts.Authentication;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using LoginRequest = Foodieland.Contracts.Authentication.LoginRequest;
 
 namespace Foodieland.API.Controllers;
 
 [Route("auth")]
+[AllowAnonymous]
 public class AuthenticationController : ApiController
 {
     private readonly ISender _mediator;

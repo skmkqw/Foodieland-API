@@ -3,7 +3,7 @@ using Foodieland.Application.Common.Interfaces.Authentication;
 using Foodieland.Application.Common.Interfaces.Persistence;
 using Foodieland.Application.Common.Interfaces.Services;
 using Foodieland.Infrastructure.Authentication;
-using Foodieland.Infrastructure.Percistence;
+using Foodieland.Infrastructure.Persistence;
 using Foodieland.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
@@ -18,8 +18,17 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, ConfigurationManager configuration)
     {
         services.AddAuth(configuration);
+        
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+        
+        services.AddPersistence();
+        return services;
+    }
+    
+    private static IServiceCollection AddPersistence(this IServiceCollection services)
+    {
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IRecipeRepository, RecipeRepository>();
         return services;
     }
 

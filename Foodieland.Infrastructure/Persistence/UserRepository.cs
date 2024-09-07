@@ -1,7 +1,7 @@
 using Foodieland.Application.Common.Interfaces.Persistence;
 using Foodieland.Domain.Entities;
 
-namespace Foodieland.Infrastructure.Percistence;
+namespace Foodieland.Infrastructure.Persistence;
 
 public class UserRepository : IUserRepository
 {
