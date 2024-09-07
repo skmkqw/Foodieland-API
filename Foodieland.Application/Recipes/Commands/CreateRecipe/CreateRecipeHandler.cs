@@ -1,0 +1,45 @@
+using ErrorOr;
+using Foodieland.Application.Common.Interfaces.Persistence;
+using Foodieland.Domain.RecipeAggregate;
+using Foodieland.Domain.RecipeAggregate.Entities;
+using Foodieland.Domain.UserAggregate.ValueObjects;
+using MediatR;
+
+namespace Foodieland.Application.Recipes.Commands.CreateRecipe;
+
+public class CreateRecipeHandler : IRequestHandler<CreateRecipeCommand, ErrorOr<Recipe>>
+{
+    private readonly IRecipeRepository _recipeRepository;
+
+    public CreateRecipeHandler(IRecipeRepository recipeRepository)
+    {
+        _recipeRepository = recipeRepository;
+    }
+
+    public async Task<ErrorOr<Recipe>> Handle(CreateRecipeCommand request, CancellationToken cancellationToken)
+    {
+        var recipe = Recipe.Create(
+            name: request.Name,
+            description: request.Description,
+            timeToCook: request.TimeToCook,
+            creatorId: UserId.Create(request.CreatorId),
+            nutritionInformation: NutritionInformation.Create(
+                calories: request.NutritionInformation.Calories, 
+                fat: request.NutritionInformation.Fat, 
+                carbohydrates: request.NutritionInformation.Carbs,
+                protein: request.NutritionInformation.Protein),
+            cookingDirections: request.Directions.ConvertAll(direction => CookingDirection.Create(
+                stepNumber: direction.StepNumber,
+                name: direction.Name,
+                description: direction.Description)),
+            request.Ingredients.ConvertAll(ingredient => Ingredient.Create(
+                name: ingredient.Name,
+                quantity: ingredient.Quantity,
+                unit: ingredient.Unit))
+        );
+        
+        _recipeRepository.Add(recipe);
+        
+        return recipe;
+    }
+}
