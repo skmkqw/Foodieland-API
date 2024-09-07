@@ -20,9 +20,9 @@ public class RecipesController : ApiController
     }
 
     [HttpPost("/recipes")]
-    public async Task<IActionResult> CreateRecipe(CreateRecipeRequest request)
+    public async Task<IActionResult> CreateRecipe([FromBody] CreateRecipeRequest request)
     {
-        var command = _mapper.Map<CreateRecipeCommand>((request, "a"));
+        var command = _mapper.Map<CreateRecipeCommand>((request, Guid.NewGuid()));
         
         var createRecipeResult = await _mediator.Send(command);
         return Ok(request);
