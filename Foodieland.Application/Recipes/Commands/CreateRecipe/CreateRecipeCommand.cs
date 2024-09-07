@@ -8,7 +8,7 @@ public record CreateRecipeCommand(
     string Name,
     string Description,
     int TimeToCook,
-    string CreatorId,
+    Guid CreatorId,
     NutritionInformationCommand NutritionInformation,
     List<CookingDirectionCommand> Directions,
     List<IngredientCommand> Ingredients) : IRequest<ErrorOr<Recipe>>;
