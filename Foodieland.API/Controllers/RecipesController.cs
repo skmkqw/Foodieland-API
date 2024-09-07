@@ -25,6 +25,9 @@ public class RecipesController : ApiController
         var command = _mapper.Map<CreateRecipeCommand>((request, Guid.NewGuid()));
         
         var createRecipeResult = await _mediator.Send(command);
-        return Ok(request);
+        
+        return createRecipeResult.Match(
+            onValue: recipe => Ok(_mapper.Map<CreateRecipeResponse>(recipe)),
+            onError: errors => Problem(errors));
     }
 }
