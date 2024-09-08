@@ -1,7 +1,7 @@
 using Foodieland.Application.Common.Interfaces.Persistence;
 using Foodieland.Domain.RecipeAggregate;
 
-namespace Foodieland.Infrastructure.Persistence;
+namespace Foodieland.Infrastructure.Persistence.Repositories;
 
 public class RecipeRepository : IRecipeRepository
 {
