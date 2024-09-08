@@ -4,13 +4,13 @@ namespace Foodieland.Domain.RecipeAggregate.ValueObjects;
 
 public sealed class NutritionInformation : ValueObject
 {
-    public int Calories { get; }
+    public int Calories { get; private set; }
     
-    public float Fat { get; }
+    public float Fat { get; private set; }
     
-    public float Carbs { get; }
+    public float Carbs { get; private set; }
     
-    public float Protein { get; }
+    public float Protein { get; private set; }
 
     private NutritionInformation(int calories, float fat, float carbs, float protein)
     {
@@ -31,5 +31,9 @@ public sealed class NutritionInformation : ValueObject
         yield return Fat;
         yield return Carbs;
         yield return Protein;
+    }
+    
+    private NutritionInformation()
+    {
     }
 }
