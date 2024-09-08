@@ -15,6 +15,11 @@ public class RecipeId : ValueObject
     {
         return new RecipeId(Guid.NewGuid());
     }
+
+    public static RecipeId Create(Guid value)
+    {
+        return new RecipeId(value);
+    }
     
     protected override IEnumerable<object> GetEqualityComponents()
     {
