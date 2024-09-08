@@ -5,9 +5,16 @@ namespace Foodieland.Infrastructure.Persistence.Repositories;
 
 public class RecipeRepository : IRecipeRepository
 {
-    private static readonly List<Recipe> _recipes = new();
+    private readonly FoodielandDbContext _dbContext;
+
+    public RecipeRepository(FoodielandDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+    
     public void Add(Recipe recipe)
     {
-        _recipes.Add(recipe);
+        _dbContext.Recipes.Add(recipe);
+        _dbContext.SaveChanges();
     }
 }
