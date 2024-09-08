@@ -13,7 +13,7 @@ public record CreateRecipeResponse(
     DateTime CreatedDateTime,
     DateTime UpdatedDateTime);
 
-public record NutritionInformationResponse(string Id, int Calories, float Protein, float Carbs, float Fat);
+public record NutritionInformationResponse(int Calories, float Protein, float Carbs, float Fat);
 
 public record CookingDirectionResponse(string Id, int StepNumber, string Name, string Description);
 

@@ -2,6 +2,7 @@ using ErrorOr;
 using Foodieland.Application.Common.Interfaces.Persistence;
 using Foodieland.Domain.RecipeAggregate;
 using Foodieland.Domain.RecipeAggregate.Entities;
+using Foodieland.Domain.RecipeAggregate.ValueObjects;
 using Foodieland.Domain.UserAggregate.ValueObjects;
 using MediatR;
 
