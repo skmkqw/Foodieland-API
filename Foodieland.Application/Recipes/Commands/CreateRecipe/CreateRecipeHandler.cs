@@ -2,6 +2,7 @@ using ErrorOr;
 using Foodieland.Application.Common.Interfaces.Persistence;
 using Foodieland.Domain.RecipeAggregate;
 using Foodieland.Domain.RecipeAggregate.Entities;
+using Foodieland.Domain.RecipeAggregate.ValueObjects;
 using Foodieland.Domain.UserAggregate.ValueObjects;
 using MediatR;
 
@@ -18,6 +19,8 @@ public class CreateRecipeHandler : IRequestHandler<CreateRecipeCommand, ErrorOr<
 
     public async Task<ErrorOr<Recipe>> Handle(CreateRecipeCommand request, CancellationToken cancellationToken)
     {
+        await Task.CompletedTask;
+        
         var recipe = Recipe.Create(
             name: request.Name,
             description: request.Description,

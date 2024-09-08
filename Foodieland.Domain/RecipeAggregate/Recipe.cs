@@ -8,19 +8,19 @@ namespace Foodieland.Domain.RecipeAggregate;
 
 public sealed class Recipe : AggregateRoot<RecipeId>
 {
-    public string Name { get; }
+    public string Name { get; private set;}
 
-    public string Description { get; }
+    public string Description { get; private set;}
 
-    public int TimeToCook { get; }
+    public int TimeToCook { get; private set;}
     
-    public UserId CreatorId { get; }
+    public UserId CreatorId { get; private set;}
     
-    public DateTime CreatedDateTime { get; }
+    public DateTime CreatedDateTime { get; private set;}
     
-    public DateTime UpdateDateTime { get; }
+    public DateTime UpdateDateTime { get; private set;}
     
-    public NutritionInformation NutritionInformation { get; }
+    public NutritionInformation NutritionInformation { get; private set;}
     
     public IReadOnlyList<CookingDirection> Directions => _directions.AsReadOnly();
     
@@ -74,5 +74,11 @@ public sealed class Recipe : AggregateRoot<RecipeId>
             nutritionInformation,
             cookingDirections,
             ingredients);
+    }
+    
+#pragma warning disable CS8618
+    private Recipe() 
+#pragma warning restore CS8618
+    {
     }
 }

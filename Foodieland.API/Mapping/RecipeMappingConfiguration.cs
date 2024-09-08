@@ -4,7 +4,7 @@ using Foodieland.Domain.RecipeAggregate;
 using Mapster;
 using CookingDirection = Foodieland.Domain.RecipeAggregate.Entities.CookingDirection;
 using Ingredient = Foodieland.Domain.RecipeAggregate.Entities.Ingredient;
-using NutritionInformation = Foodieland.Domain.RecipeAggregate.Entities.NutritionInformation;
+using NutritionInformation = Foodieland.Domain.RecipeAggregate.ValueObjects.NutritionInformation;
 
 namespace Foodieland.API.Mapping;
 
@@ -20,9 +20,6 @@ public class RecipeMappingConfiguration : IRegister
             .Map(dest => dest.Id, src => src.Id.Value)
             .Map(dest => dest.CreatorId, src => src.CreatorId.Value)
             .Map(dest => dest.ReviewIds, src => src.ReviewIds.Select(id => id.Value).ToList());
-        
-        config.NewConfig<NutritionInformation, NutritionInformationResponse>()
-            .Map(dest => dest.Id, src => src.Id.Value);
         
         config.NewConfig<CookingDirection, CookingDirectionResponse>()
             .Map(dest => dest.Id, src => src.Id.Value);
