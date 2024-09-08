@@ -19,6 +19,8 @@ public class CreateRecipeHandler : IRequestHandler<CreateRecipeCommand, ErrorOr<
 
     public async Task<ErrorOr<Recipe>> Handle(CreateRecipeCommand request, CancellationToken cancellationToken)
     {
+        await Task.CompletedTask;
+        
         var recipe = Recipe.Create(
             name: request.Name,
             description: request.Description,
