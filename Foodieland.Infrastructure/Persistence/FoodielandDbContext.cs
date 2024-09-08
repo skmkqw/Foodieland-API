@@ -10,4 +10,12 @@ public class FoodielandDbContext : DbContext
     }
     
     public DbSet<Recipe> Recipes { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.
+            ApplyConfigurationsFromAssembly(typeof(FoodielandDbContext).Assembly);
+        
+        base.OnModelCreating(modelBuilder);
+    }
 }
