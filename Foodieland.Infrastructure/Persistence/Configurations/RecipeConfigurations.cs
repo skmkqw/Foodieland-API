@@ -70,11 +70,11 @@ public class RecipeConfigurations : IEntityTypeConfiguration<Recipe>
                     value => CookingDirectionId.Create(value));
             
             //Name
-            builder.Property(d => d.Name)
+            db.Property(d => d.Name)
                 .HasMaxLength(100);
             
             //Description
-            builder.Property(d => d.Description)
+            db.Property(d => d.Description)
                 .HasMaxLength(500);
         });
         
@@ -103,6 +103,9 @@ public class RecipeConfigurations : IEntityTypeConfiguration<Recipe>
             
             //Name
             ib.Property(i => i.Name)
+                .HasMaxLength(100);
+            
+            ib.Property(i => i.Unit)
                 .HasMaxLength(100);
         });
         
