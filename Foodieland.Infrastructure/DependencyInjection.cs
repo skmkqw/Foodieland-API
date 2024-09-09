@@ -4,6 +4,7 @@ using Foodieland.Application.Common.Interfaces.Persistence;
 using Foodieland.Application.Common.Interfaces.Services;
 using Foodieland.Infrastructure.Authentication;
 using Foodieland.Infrastructure.Persistence;
+using Foodieland.Infrastructure.Persistence.Interceptors;
 using Foodieland.Infrastructure.Persistence.Repositories;
 using Foodieland.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -30,8 +31,9 @@ public static class DependencyInjection
     private static IServiceCollection AddPersistence(this IServiceCollection services)
     {
         services.AddDbContext<FoodielandDbContext>(options => options.UseSqlServer("Data Source=localhost;Initial Catalog=FoodielandDatabase;User Id=sa;Password=skmkqw04012006Tima;Integrated Security=True;TrustServerCertificate=true;Trusted_Connection=false"));
-        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserRepository, UserRepository>(); 
         services.AddScoped<IRecipeRepository, RecipeRepository>();
+        services.AddScoped<PublishDomainEventsInterceptor>();
         return services;
     }
 
