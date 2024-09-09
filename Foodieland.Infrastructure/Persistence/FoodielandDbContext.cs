@@ -1,21 +1,32 @@
+using Foodieland.Domain.Common.Models;
 using Foodieland.Domain.RecipeAggregate;
+using Foodieland.Infrastructure.Persistence.Interceptors;
 using Microsoft.EntityFrameworkCore;
 
 namespace Foodieland.Infrastructure.Persistence;
 
 public class FoodielandDbContext : DbContext
 {
-    public FoodielandDbContext(DbContextOptions<FoodielandDbContext> options) : base(options) 
+    private readonly PublishDomainEventsInterceptor _publishDomainEventsInterceptor;
+    public FoodielandDbContext(DbContextOptions<FoodielandDbContext> options, PublishDomainEventsInterceptor publishDomainEventsInterceptor) : base(options)
     {
+        _publishDomainEventsInterceptor = publishDomainEventsInterceptor;
     }
     
     public DbSet<Recipe> Recipes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.
-            ApplyConfigurationsFromAssembly(typeof(FoodielandDbContext).Assembly);
+        modelBuilder
+            .Ignore<List<IDomainEvent>>()
+            .ApplyConfigurationsFromAssembly(typeof(FoodielandDbContext).Assembly);
         
         base.OnModelCreating(modelBuilder);
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.AddInterceptors(_publishDomainEventsInterceptor);
+        base.OnConfiguring(optionsBuilder);
     }
 }
