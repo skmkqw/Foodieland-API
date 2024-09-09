@@ -1,5 +1,6 @@
 using Foodieland.Domain.Common.Models;
 using Foodieland.Domain.RecipeAggregate.Entities;
+using Foodieland.Domain.RecipeAggregate.Events;
 using Foodieland.Domain.RecipeAggregate.ValueObjects;
 using Foodieland.Domain.ReviewAggregate.ValueObjects;
 using Foodieland.Domain.UserAggregate.ValueObjects;
@@ -64,7 +65,7 @@ public sealed class Recipe : AggregateRoot<RecipeId>
         List<CookingDirection> cookingDirections,
         List<Ingredient> ingredients)
     {
-        return new Recipe(RecipeId.CreateUnique(),
+        var recipe = new Recipe(RecipeId.CreateUnique(),
             name,
             description,
             timeToCook,
@@ -74,6 +75,10 @@ public sealed class Recipe : AggregateRoot<RecipeId>
             nutritionInformation,
             cookingDirections,
             ingredients);
+
+        recipe.AddDomainEvent(new RecipeCreated(recipe));
+
+        return recipe;
     }
     
 #pragma warning disable CS8618
