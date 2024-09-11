@@ -9,12 +9,12 @@ public record CreateRecipeCommand(
     string Description,
     int TimeToCook,
     Guid CreatorId,
-    NutritionInformationCommand NutritionInformation,
-    List<CookingDirectionCommand> Directions,
-    List<IngredientCommand> Ingredients) : IRequest<ErrorOr<Recipe>>;
+    CreateNutritionInformationCommand NutritionInformation,
+    List<CreateCookingDirectionCommand> Directions,
+    List<CreateIngredientCommand> Ingredients) : IRequest<ErrorOr<Recipe>>;
 
-public record NutritionInformationCommand(int Calories, float Protein, float Carbs, float Fat);
+public record CreateNutritionInformationCommand(int Calories, float Protein, float Carbs, float Fat);
 
-public record CookingDirectionCommand(int StepNumber, string Name, string Description);
+public record CreateCookingDirectionCommand(int StepNumber, string Name, string Description);
 
-public record IngredientCommand(string Name, float Quantity, string Unit);
+public record CreateIngredientCommand(string Name, float Quantity, string Unit);
