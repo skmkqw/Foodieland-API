@@ -13,7 +13,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodieland.Contracts", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodieland.Domain", "src\Foodieland.Domain\Foodieland.Domain.csproj", "{FD0E52E4-1085-4F68-957A-B56A67C592BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodieland.Infrastructure", "Foodieland.Infrastructure\Foodieland.Infrastructure.csproj", "{79112629-C64F-4962-BC24-237A223C86F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodieland.Infrastructure", "src\Foodieland.Infrastructure\Foodieland.Infrastructure.csproj", "{2A6F2B8E-96B3-47C6-B2EC-C2C06B7D8154}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{7771B342-49CA-42CA-A33C-C2796306FB07}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{31E26A59-FEA1-46D3-A413-CF5C396FF60B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodieland.API.UnitTests", "tests\UnitTests\Foodieland.API.UnitTests\Foodieland.API.UnitTests.csproj", "{237A2D3D-1ED7-4FC9-9373-61B82CBFC099}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodieland.Application.UnitTests", "tests\UnitTests\Foodieland.Application.UnitTests\Foodieland.Application.UnitTests.csproj", "{361A8095-AD68-4563-A6C5-FC83F3B0092C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodieland.Domain.UnitTests", "tests\UnitTests\Foodieland.Domain.UnitTests\Foodieland.Domain.UnitTests.csproj", "{2C289224-70AB-4947-A453-192D0714EF6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodieland.Infrastructure.UnitTests", "tests\UnitTests\Foodieland.Infrastructure.UnitTests\Foodieland.Infrastructure.UnitTests.csproj", "{5E5E4B52-A67B-4453-AAE3-A39CB065AD80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
