@@ -8,11 +8,11 @@ using MediatR;
 
 namespace Foodieland.Application.Recipes.Commands.CreateRecipe;
 
-public class CreateRecipeHandler : IRequestHandler<CreateRecipeCommand, ErrorOr<Recipe>>
+public class CreateRecipeCommandHandler : IRequestHandler<CreateRecipeCommand, ErrorOr<Recipe>>
 {
     private readonly IRecipeRepository _recipeRepository;
 
-    public CreateRecipeHandler(IRecipeRepository recipeRepository)
+    public CreateRecipeCommandHandler(IRecipeRepository recipeRepository)
     {
         _recipeRepository = recipeRepository;
     }
