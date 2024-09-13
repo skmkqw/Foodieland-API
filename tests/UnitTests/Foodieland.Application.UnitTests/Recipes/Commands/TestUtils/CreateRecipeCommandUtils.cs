@@ -5,15 +5,17 @@ namespace Foodieland.Application.UnitTests.Recipes.Commands.TestUtils;
 
 public static class CreateRecipeCommandUtils
 {
-    public static CreateRecipeCommand CreateCommand() =>
+    public static CreateRecipeCommand CreateCommand(
+        List<CreateCookingDirectionCommand>? directions = null,
+        List<CreateIngredientCommand>? ingredients = null) =>
         new CreateRecipeCommand(
             Constants.Recipe.Name,
             Constants.Recipe.Description,
             Constants.Recipe.TimeToCook,
             Constants.User.UserId.Value,
             CreateNutritionInformationCommand(),
-            CreateDirectionsCommand(2),
-            CreateIngredientsCommand(3)
+            directions ?? CreateDirectionsCommand(1),
+            ingredients ?? CreateIngredientsCommand(1)
         );
 
     public static List<CreateCookingDirectionCommand> CreateDirectionsCommand(int directionCount) =>
