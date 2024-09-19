@@ -35,16 +35,6 @@ public class AuthenticationController : ApiController
             );
     }
 
-    private static AuthenticationResponse MapAuthResponse(AuthenticationResult authResult)
-    {
-        return new AuthenticationResponse(
-            authResult.User.Id,
-            authResult.User.FirstName,
-            authResult.User.LastName,
-            authResult.User.Email,
-            authResult.Token);
-    }
-
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginRequest request)
     {
