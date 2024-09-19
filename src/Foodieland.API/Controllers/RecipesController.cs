@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Foodieland.API.Controllers;
 
-[Route("[controller]")]
 public class RecipesController : ApiController
 {
     private readonly IMapper _mapper;
@@ -19,10 +18,10 @@ public class RecipesController : ApiController
         _mediator = mediator;
     }
 
-    [HttpPost("/recipes")]
-    public async Task<IActionResult> CreateRecipe([FromBody] CreateRecipeRequest request)
+    [HttpPost("{creatorId}/recipes")]
+    public async Task<IActionResult> CreateRecipe([FromRoute] Guid creatorId, [FromBody] CreateRecipeRequest request)
     {
-        var command = _mapper.Map<CreateRecipeCommand>((request, Guid.NewGuid()));
+        var command = _mapper.Map<CreateRecipeCommand>((request, creatorId));
         
         var createRecipeResult = await _mediator.Send(command);
         
