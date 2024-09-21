@@ -42,7 +42,7 @@ public class UserConfigurations : IEntityTypeConfiguration<User>
     {
         builder.OwnsMany(r => r.ReviewIds, rib =>
         {
-            rib.ToTable("ReviewIds");
+            rib.ToTable("UserReviewIds");
             
             //FK
             rib.WithOwner().HasForeignKey("UserId");
