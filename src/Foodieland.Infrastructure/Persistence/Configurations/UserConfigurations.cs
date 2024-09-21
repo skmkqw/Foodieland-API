@@ -36,6 +36,14 @@ public class UserConfigurations : IEntityTypeConfiguration<User>
         //LastName
         builder.Property(x => x.LastName)
             .HasMaxLength(200);
+        
+        //Email
+        builder.Property(x => x.Email)
+            .HasMaxLength(100);
+        
+        //Password
+        builder.Property(x => x.Password)
+            .HasMaxLength(100);
     }
     
     private void ConfigureReviewIdsTable(EntityTypeBuilder<User> builder)
