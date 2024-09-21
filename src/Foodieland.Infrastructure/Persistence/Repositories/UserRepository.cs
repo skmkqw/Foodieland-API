@@ -5,14 +5,15 @@ namespace Foodieland.Infrastructure.Persistence.Repositories;
 
 public class UserRepository : IUserRepository
 {
-    private static readonly List<User> _users = new();
+    private readonly FoodielandDbContext _context;
     public User? GetUserByEmail(string email)
     {
-        return _users.FirstOrDefault(u => u.Email == email);
+        return _context.Users.FirstOrDefault(u => u.Email == email);
     }
 
     public void AddUser(User user)
     {
-        _users.Add(user);
+        _context.Users.Add(user);
+        _context.SaveChanges();
     }
 }
