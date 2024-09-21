@@ -3,7 +3,7 @@ using Foodieland.Application.Authentication.Common;
 using Foodieland.Application.Common.Interfaces.Authentication;
 using Foodieland.Application.Common.Interfaces.Persistence;
 using Foodieland.Domain.Common.Errors;
-using Foodieland.Domain.Entities;
+using Foodieland.Domain.UserAggregate;
 using MediatR;
 
 namespace Foodieland.Application.Authentication.Queries.Login;

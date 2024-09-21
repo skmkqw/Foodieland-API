@@ -3,7 +3,7 @@ using Foodieland.Application.Authentication.Common;
 using Foodieland.Application.Common.Interfaces.Authentication;
 using Foodieland.Application.Common.Interfaces.Persistence;
 using Foodieland.Domain.Common.Errors;
-using Foodieland.Domain.Entities;
+using Foodieland.Domain.UserAggregate;
 using MediatR;
 
 namespace Foodieland.Application.Authentication.Commands.Register;
@@ -23,16 +23,14 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
     {
         await Task.CompletedTask;
         
-        if (_userRepository.GetUserByEmail(command.Email) != null)
+        if (_userRepository.GetUserByEmail(command.Email) is not null)
             return Errors.User.DuplicateEmail;
 
-        User user = new User
-        {
-            Email = command.Email,
-            FirstName = command.FirstName, 
-            LastName = command.LastName,
-            Password = command.Password
-        };
+        var user = User.Create(
+            command.FirstName,
+            command.LastName,
+            command.Email,
+            command.Password);
         
         _userRepository.AddUser(user);
         

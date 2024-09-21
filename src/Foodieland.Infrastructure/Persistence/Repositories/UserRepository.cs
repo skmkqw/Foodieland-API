@@ -1,5 +1,5 @@
 using Foodieland.Application.Common.Interfaces.Persistence;
-using Foodieland.Domain.Entities;
+using Foodieland.Domain.UserAggregate;
 
 namespace Foodieland.Infrastructure.Persistence.Repositories;
 

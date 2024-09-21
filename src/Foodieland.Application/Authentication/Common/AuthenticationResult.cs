@@ -1,4 +1,4 @@
-using Foodieland.Domain.Entities;
+using Foodieland.Domain.UserAggregate;
 
 namespace Foodieland.Application.Authentication.Common;
 
