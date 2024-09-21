@@ -54,6 +54,37 @@ namespace Foodieland.Infrastructure.Migrations
                     b.ToTable("Recipes", (string)null);
                 });
 
+            modelBuilder.Entity("Foodieland.Domain.UserAggregate.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users", (string)null);
+                });
+
             modelBuilder.Entity("Foodieland.Domain.RecipeAggregate.Recipe", b =>
                 {
                     b.OwnsMany("Foodieland.Domain.RecipeAggregate.Entities.CookingDirection", "Directions", b1 =>
@@ -118,31 +149,6 @@ namespace Foodieland.Infrastructure.Migrations
                                 .HasForeignKey("RecipeId");
                         });
 
-                    b.OwnsOne("Foodieland.Domain.RecipeAggregate.ValueObjects.NutritionInformation", "NutritionInformation", b1 =>
-                        {
-                            b1.Property<Guid>("RecipeId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<int>("Calories")
-                                .HasColumnType("int");
-
-                            b1.Property<float>("Carbs")
-                                .HasColumnType("real");
-
-                            b1.Property<float>("Fat")
-                                .HasColumnType("real");
-
-                            b1.Property<float>("Protein")
-                                .HasColumnType("real");
-
-                            b1.HasKey("RecipeId");
-
-                            b1.ToTable("Recipes");
-
-                            b1.WithOwner()
-                                .HasForeignKey("RecipeId");
-                        });
-
                     b.OwnsMany("Foodieland.Domain.ReviewAggregate.ValueObjects.ReviewId", "ReviewIds", b1 =>
                         {
                             b1.Property<int>("Id")
@@ -168,12 +174,121 @@ namespace Foodieland.Infrastructure.Migrations
                                 .HasForeignKey("RecipeId");
                         });
 
+                    b.OwnsOne("Foodieland.Domain.RecipeAggregate.ValueObjects.NutritionInformation", "NutritionInformation", b1 =>
+                        {
+                            b1.Property<Guid>("RecipeId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("Calories")
+                                .HasColumnType("int");
+
+                            b1.Property<float>("Carbs")
+                                .HasColumnType("real");
+
+                            b1.Property<float>("Fat")
+                                .HasColumnType("real");
+
+                            b1.Property<float>("Protein")
+                                .HasColumnType("real");
+
+                            b1.HasKey("RecipeId");
+
+                            b1.ToTable("Recipes");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RecipeId");
+                        });
+
                     b.Navigation("Directions");
 
                     b.Navigation("Ingredients");
 
                     b.Navigation("NutritionInformation")
                         .IsRequired();
+
+                    b.Navigation("ReviewIds");
+                });
+
+            modelBuilder.Entity("Foodieland.Domain.UserAggregate.User", b =>
+                {
+                    b.OwnsMany("Foodieland.Domain.RecipeAggregate.ValueObjects.RecipeId", "LikedRecipes", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("Value")
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("RecipeId");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("UserId");
+
+                            b1.ToTable("LikedRecipeIds", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.OwnsMany("Foodieland.Domain.RecipeAggregate.ValueObjects.RecipeId", "RecipeIds", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("Value")
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("RecipeId");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("UserId");
+
+                            b1.ToTable("RecipeIds", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.OwnsMany("Foodieland.Domain.ReviewAggregate.ValueObjects.ReviewId", "ReviewIds", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("Value")
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("ReviewId");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("UserId");
+
+                            b1.ToTable("UserReviewIds", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.Navigation("LikedRecipes");
+
+                    b.Navigation("RecipeIds");
 
                     b.Navigation("ReviewIds");
                 });

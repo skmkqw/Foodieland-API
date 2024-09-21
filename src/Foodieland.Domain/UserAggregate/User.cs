@@ -21,13 +21,13 @@ public sealed class User : AggregateRoot<UserId>
     
     public IReadOnlyList<ReviewId> ReviewIds => _reviewIds.AsReadOnly();
     
-    public IReadOnlyList<RecipeId> RecipeIds => _recipes.AsReadOnly();
+    public IReadOnlyList<RecipeId> RecipeIds => _recipeIds.AsReadOnly();
     
     public IReadOnlyList<RecipeId> LikedRecipes => _likedRecipes.AsReadOnly();
     
     private readonly List<ReviewId> _reviewIds = new();
     
-    private readonly List<RecipeId> _recipes = new();
+    private readonly List<RecipeId> _recipeIds = new();
     
     private readonly List<RecipeId> _likedRecipes = new();
     
@@ -57,5 +57,11 @@ public sealed class User : AggregateRoot<UserId>
             password,
             DateTime.UtcNow,
             DateTime.UtcNow);
+    }
+
+#pragma warning disable CS8618
+    private User()
+#pragma warning restore CS8618
+    {
     }
 }
