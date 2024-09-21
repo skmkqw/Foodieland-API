@@ -10,13 +10,15 @@ namespace Foodieland.Application.Authentication.Commands.Register;
 
 public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<AuthenticationResult>>
 {
+    private readonly IPasswordHasher _passwordHasher;
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
     private readonly IUserRepository _userRepository;
 
-    public RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository)
+    public RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository, IPasswordHasher passwordHasher)
     {
         _jwtTokenGenerator = jwtTokenGenerator;
         _userRepository = userRepository;
+        _passwordHasher = passwordHasher;
     }
 
     public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand command, CancellationToken cancellationToken)
@@ -25,12 +27,14 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
         
         if (_userRepository.GetUserByEmail(command.Email) is not null)
             return Errors.User.DuplicateEmail;
-
+        
+        string hashedPassword = _passwordHasher.HashPassword(command.Password);    
+    
         var user = User.Create(
             command.FirstName,
             command.LastName,
             command.Email,
-            command.Password);
+            hashedPassword);
         
         _userRepository.AddUser(user);
         
