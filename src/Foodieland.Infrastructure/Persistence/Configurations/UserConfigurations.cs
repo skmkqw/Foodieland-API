@@ -86,7 +86,7 @@ public class UserConfigurations : IEntityTypeConfiguration<User>
     
     private void ConfigureLikedRecipeIdsTable(EntityTypeBuilder<User> builder)
     {
-        builder.OwnsMany(r => r.RecipeIds, rib =>
+        builder.OwnsMany(r => r.LikedRecipes, rib =>
         {
             rib.ToTable("LikedRecipeIds");
             
