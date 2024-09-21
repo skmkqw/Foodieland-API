@@ -1,5 +1,6 @@
 using Foodieland.Domain.Common.Models;
 using Foodieland.Domain.RecipeAggregate;
+using Foodieland.Domain.UserAggregate;
 using Foodieland.Infrastructure.Persistence.Interceptors;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,8 @@ public class FoodielandDbContext : DbContext
     {
         _publishDomainEventsInterceptor = publishDomainEventsInterceptor;
     }
+    
+    public DbSet<User> Users { get; set; }
     
     public DbSet<Recipe> Recipes { get; set; }
 
