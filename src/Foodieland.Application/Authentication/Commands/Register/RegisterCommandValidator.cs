@@ -18,8 +18,11 @@ public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
             .Matches(@"[\W]").WithMessage("Password must contain at least one special character");
         
         RuleFor(x => x.FirstName)
-            .NotEmpty().WithMessage("First name is required");
+            .NotEmpty().WithMessage("First name is required")
+            .MaximumLength(100).WithMessage("First name must be shorter than 100 characters");
+        
         RuleFor(x => x.LastName)
-            .NotEmpty().WithMessage("Last name is required");
+            .NotEmpty().WithMessage("Last name is required")
+            .MaximumLength(200).WithMessage("Last name must be shorter than 200 characters");
     }
 }
