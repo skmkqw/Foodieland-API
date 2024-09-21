@@ -10,13 +10,15 @@ namespace Foodieland.Application.Authentication.Queries.Login;
 
 public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<AuthenticationResult>>
 {
+    private readonly IPasswordHasher _passwordHasher;
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
     private readonly IUserRepository _userRepository;
 
-    public LoginQueryHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository)
+    public LoginQueryHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository, IPasswordHasher passwordHasher)
     {
         _jwtTokenGenerator = jwtTokenGenerator;
         _userRepository = userRepository;
+        _passwordHasher = passwordHasher;
     }
     
     public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery query, CancellationToken cancellationToken)
@@ -26,7 +28,7 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
         if (_userRepository.GetUserByEmail(query.Email) is not User user)
             return Errors.Authentication.InvalidCredentials;
 
-        if (user.Password != query.Password)
+        if (!_passwordHasher.VerifyHashedPassword(user.Password, query.Password))
             return Errors.Authentication.InvalidCredentials;
         
         var token = _jwtTokenGenerator.GenerateToken(user);
