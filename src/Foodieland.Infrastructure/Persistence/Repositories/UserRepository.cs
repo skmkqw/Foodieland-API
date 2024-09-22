@@ -28,4 +28,10 @@ public class UserRepository : IUserRepository
         _dbContext.Users.Add(user);
         _dbContext.SaveChanges();
     }
+
+    public void DeleteUser(User user)
+    {
+        _dbContext.Users.Remove(user);
+        _dbContext.SaveChanges();
+    }
 }
