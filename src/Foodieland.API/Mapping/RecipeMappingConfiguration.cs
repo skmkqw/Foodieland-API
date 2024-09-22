@@ -12,7 +12,7 @@ public class RecipeMappingConfiguration : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<(CreateRecipeRequest request, Guid creatorId), CreateRecipeCommand>()
+        config.NewConfig<(CreateRecipeRequest request, Guid? creatorId), CreateRecipeCommand>()
             .Map(dest => dest.CreatorId, src => src.creatorId)
             .Map(dest => dest, src => src.request);
 

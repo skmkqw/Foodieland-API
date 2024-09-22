@@ -23,14 +23,13 @@ public class RecipesController : ApiController
     [HttpPost("/recipes")]
     public async Task<IActionResult> CreateRecipe([FromBody] CreateRecipeRequest request)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        
-        if (string.IsNullOrEmpty(userId) || !Guid.TryParse(userId, out var creatorId))
+        var userId = GetUserId();
+        if (!userId.HasValue)
         {
-            return Problem([Error.Unauthorized(description: "Provided authorization token has no valid user id")]);
+            return UnauthorizedUserIdProblem();
         }
         
-        var command = _mapper.Map<CreateRecipeCommand>((request, creatorId));
+        var command = _mapper.Map<CreateRecipeCommand>((request, userId));
         
         var createRecipeResult = await _mediator.Send(command);
         
