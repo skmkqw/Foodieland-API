@@ -20,7 +20,7 @@ public class UserRepository : IUserRepository
 
     public User? GetUserById(UserId userId)
     {
-        return _dbContext.Users.FirstOrDefault(u => u.Id == userId);
+        return _dbContext.Users.Find(userId);
     }
 
     public void AddUser(User user)
