@@ -1,5 +1,6 @@
 using Foodieland.Application.Common.Interfaces.Persistence;
 using Foodieland.Domain.UserAggregate;
+using Foodieland.Domain.UserAggregate.ValueObjects;
 
 namespace Foodieland.Infrastructure.Persistence.Repositories;
 
@@ -15,6 +16,11 @@ public class UserRepository : IUserRepository
     public User? GetUserByEmail(string email)
     {
         return _dbContext.Users.FirstOrDefault(u => u.Email == email);
+    }
+
+    public User? GetUserById(UserId userId)
+    {
+        return _dbContext.Users.FirstOrDefault(u => u.Id == userId);
     }
 
     public void AddUser(User user)
