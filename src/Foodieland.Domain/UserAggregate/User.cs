@@ -59,6 +59,11 @@ public sealed class User : AggregateRoot<UserId>
             DateTime.UtcNow);
     }
 
+    public void AddRecipe(RecipeId recipeId)
+    {
+        _recipeIds.Add(recipeId);
+    }
+
 #pragma warning disable CS8618
     private User()
 #pragma warning restore CS8618
