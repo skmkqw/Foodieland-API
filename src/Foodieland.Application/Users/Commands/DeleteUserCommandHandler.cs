@@ -30,10 +30,10 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Error
             return Error.Unauthorized("User.Unauthorized", "You are not authorized to delete this account.");
         }
         
+        user.AddDomainEvent(new UserDeleted(user));
+        
         _userRepository.DeleteUser(user);
         
-        user.AddDomainEvent(new UserDeleted(user));
-
         return Unit.Value;
     }
 }
