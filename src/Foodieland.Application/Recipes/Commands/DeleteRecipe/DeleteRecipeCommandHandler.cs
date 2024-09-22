@@ -1,5 +1,6 @@
 using ErrorOr;
 using Foodieland.Application.Common.Interfaces.Persistence;
+using Foodieland.Domain.RecipeAggregate.Events;
 using MediatR;
 
 namespace Foodieland.Application.Recipes.Commands.DeleteRecipe;
@@ -28,6 +29,8 @@ public class DeleteRecipeCommandHandler : IRequestHandler<DeleteRecipeCommand, E
         {
             return Error.Unauthorized("Recipe.Unauthorized", "You are not authorized to delete this recipe.");
         }
+        
+        recipe.AddDomainEvent(new RecipeDeleted(recipe));
         
         _recipeRepository.DeleteRecipe(recipe);
 
