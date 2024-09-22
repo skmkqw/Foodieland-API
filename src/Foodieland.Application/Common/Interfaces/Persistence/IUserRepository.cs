@@ -10,4 +10,6 @@ public interface IUserRepository
     User? GetUserById(UserId userId);
     
     void AddUser(User user);
+    
+    void DeleteUser(User user);
 }
