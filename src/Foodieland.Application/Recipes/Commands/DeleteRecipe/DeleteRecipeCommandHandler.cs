@@ -21,7 +21,7 @@ public class DeleteRecipeCommandHandler : IRequestHandler<DeleteRecipeCommand, E
 
         if (recipe is null)
         { 
-            return Error.NotFound("Recipe.NotFound", "Recipe not found or don't exist");
+            return Error.NotFound("Recipe.NotFound", "Recipe not found or doesn't exist");
         }
 
         if (recipe.CreatorId != request.CreatorId)

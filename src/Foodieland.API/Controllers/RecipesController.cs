@@ -39,7 +39,7 @@ public class RecipesController : ApiController
             onError: errors => Problem(errors));
     }
 
-    [HttpDelete("/recipes/{id}")]
+    [HttpDelete("/recipes/{recipeId}")]
     public async Task<IActionResult> DeleteRecipe([FromRoute] Guid recipeId)
     {
         var userId = GetUserId();
@@ -53,7 +53,7 @@ public class RecipesController : ApiController
         var deleteRecipeResult = await _mediator.Send(command);
         
         return deleteRecipeResult.Match(
-            onValue: recipe => NoContent(),
+            onValue: _ => NoContent(),
             onError: errors => Problem(errors)); 
     }
 }
