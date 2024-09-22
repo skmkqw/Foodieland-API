@@ -4,7 +4,6 @@ using Foodieland.Domain.RecipeAggregate;
 using Mapster;
 using CookingDirection = Foodieland.Domain.RecipeAggregate.Entities.CookingDirection;
 using Ingredient = Foodieland.Domain.RecipeAggregate.Entities.Ingredient;
-using NutritionInformation = Foodieland.Domain.RecipeAggregate.ValueObjects.NutritionInformation;
 
 namespace Foodieland.API.Mapping;
 

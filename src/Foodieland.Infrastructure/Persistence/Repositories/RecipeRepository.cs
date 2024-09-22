@@ -1,5 +1,6 @@
 using Foodieland.Application.Common.Interfaces.Persistence;
 using Foodieland.Domain.RecipeAggregate;
+using Foodieland.Domain.RecipeAggregate.ValueObjects;
 
 namespace Foodieland.Infrastructure.Persistence.Repositories;
 
@@ -11,7 +12,12 @@ public class RecipeRepository : IRecipeRepository
     {
         _dbContext = dbContext;
     }
-    
+
+    public Recipe? GetRecipeById(RecipeId recipeId)
+    {
+        return _dbContext.Recipes.Find(recipeId);
+    }
+
     public void Add(Recipe recipe)
     {
         _dbContext.Recipes.Add(recipe);
