@@ -1,3 +1,5 @@
+using System.Security.Claims;
+using ErrorOr;
 using Foodieland.Application.Recipes.Commands.CreateRecipe;
 using Foodieland.Contracts.Recipes;
 using MapsterMapper;
@@ -18,9 +20,16 @@ public class RecipesController : ApiController
         _mediator = mediator;
     }
 
-    [HttpPost("{creatorId}/recipes")]
-    public async Task<IActionResult> CreateRecipe([FromRoute] Guid creatorId, [FromBody] CreateRecipeRequest request)
+    [HttpPost("/recipes")]
+    public async Task<IActionResult> CreateRecipe([FromBody] CreateRecipeRequest request)
     {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        if (string.IsNullOrEmpty(userId) || !Guid.TryParse(userId, out var creatorId))
+        {
+            return Problem([Error.Unauthorized(description: "Provided authorization token has no valid user id")]);
+        }
+        
         var command = _mapper.Map<CreateRecipeCommand>((request, creatorId));
         
         var createRecipeResult = await _mediator.Send(command);
