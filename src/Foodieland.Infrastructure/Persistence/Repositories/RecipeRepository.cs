@@ -18,9 +18,15 @@ public class RecipeRepository : IRecipeRepository
         return _dbContext.Recipes.Find(recipeId);
     }
 
-    public void Add(Recipe recipe)
+    public void AddRecipe(Recipe recipe)
     {
         _dbContext.Recipes.Add(recipe);
+        _dbContext.SaveChanges();
+    }
+
+    public void DeleteRecipe(Recipe recipe)
+    {
+        _dbContext.Recipes.Remove(recipe);
         _dbContext.SaveChanges();
     }
 }

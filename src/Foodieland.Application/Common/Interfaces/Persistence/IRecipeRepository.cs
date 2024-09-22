@@ -7,5 +7,7 @@ public interface IRecipeRepository
 {
     Recipe? GetRecipeById(RecipeId recipeId);
     
-    void Add(Recipe recipe);
+    void AddRecipe(Recipe recipe);
+    
+    void DeleteRecipe(Recipe recipe);
 }
