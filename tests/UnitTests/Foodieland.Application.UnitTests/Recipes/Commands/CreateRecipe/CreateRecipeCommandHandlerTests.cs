@@ -29,7 +29,7 @@ public class CreateRecipeCommandHandlerTests
         //Assert
         result.IsError.Should().BeFalse();
         result.Value.ValidateCreatedFrom(createRecipeCommand);
-        _mockRecipeRepository.Verify(m => m.Add(result.Value), Times.Once);
+        _mockRecipeRepository.Verify(m => m.AddRecipe(result.Value), Times.Once);
     }
 
     public static IEnumerable<object[]> ValidCreateRecipeCommands()

@@ -41,7 +41,7 @@ public class CreateRecipeCommandHandler : IRequestHandler<CreateRecipeCommand, E
                 unit: ingredient.Unit))
         );
         
-        _recipeRepository.Add(recipe);
+        _recipeRepository.AddRecipe(recipe);
         
         return recipe;
     }

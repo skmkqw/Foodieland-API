@@ -64,6 +64,11 @@ public sealed class User : AggregateRoot<UserId>
         _recipeIds.Add(recipeId);
     }
 
+    public void RemoveRecipe(RecipeId recipeId)
+    {
+        _recipeIds.Remove(recipeId);
+    }
+    
 #pragma warning disable CS8618
     private User()
 #pragma warning restore CS8618

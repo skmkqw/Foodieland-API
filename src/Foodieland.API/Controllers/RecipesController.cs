@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using ErrorOr;
 using Foodieland.Application.Recipes.Commands.CreateRecipe;
+using Foodieland.Application.Recipes.Commands.DeleteRecipe;
 using Foodieland.Contracts.Recipes;
 using MapsterMapper;
 using MediatR;
@@ -36,5 +37,23 @@ public class RecipesController : ApiController
         return createRecipeResult.Match(
             onValue: recipe => Ok(_mapper.Map<CreateRecipeResponse>(recipe)),
             onError: errors => Problem(errors));
+    }
+
+    [HttpDelete("/recipes/{recipeId}")]
+    public async Task<IActionResult> DeleteRecipe([FromRoute] Guid recipeId)
+    {
+        var userId = GetUserId();
+        if (!userId.HasValue)
+        {
+            return UnauthorizedUserIdProblem();
+        }
+        
+        var command = _mapper.Map<DeleteRecipeCommand>((recipeId, userId));
+        
+        var deleteRecipeResult = await _mediator.Send(command);
+        
+        return deleteRecipeResult.Match(
+            onValue: _ => NoContent(),
+            onError: errors => Problem(errors)); 
     }
 }
