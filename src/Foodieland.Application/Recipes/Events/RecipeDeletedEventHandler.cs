@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Foodieland.Application.Recipes.Events;
 
-public class RecipeDeletedEventHandler : INotificationHandler<RecipeCreated>
+public class RecipeDeletedEventHandler : INotificationHandler<RecipeDeleted>
 {
     private readonly IUserRepository _userRepository;
 
@@ -13,7 +13,7 @@ public class RecipeDeletedEventHandler : INotificationHandler<RecipeCreated>
         _userRepository = userRepository;
     }
     
-    public Task Handle(RecipeCreated notification, CancellationToken cancellationToken)
+    public Task Handle(RecipeDeleted notification, CancellationToken cancellationToken)
     {
         var recipeCreator = _userRepository.GetUserById(notification.Recipe.CreatorId);
         
