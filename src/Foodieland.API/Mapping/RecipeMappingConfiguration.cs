@@ -1,6 +1,9 @@
 using Foodieland.Application.Recipes.Commands.CreateRecipe;
+using Foodieland.Application.Recipes.Commands.DeleteRecipe;
 using Foodieland.Contracts.Recipes;
 using Foodieland.Domain.RecipeAggregate;
+using Foodieland.Domain.RecipeAggregate.ValueObjects;
+using Foodieland.Domain.UserAggregate.ValueObjects;
 using Mapster;
 using CookingDirection = Foodieland.Domain.RecipeAggregate.Entities.CookingDirection;
 using Ingredient = Foodieland.Domain.RecipeAggregate.Entities.Ingredient;
@@ -25,5 +28,10 @@ public class RecipeMappingConfiguration : IRegister
         
         config.NewConfig<Ingredient, IngredientResponse>()
             .Map(dest => dest.Id, src => src.Id.Value);
+
+
+        config.NewConfig<(Guid recipeId, Guid? creatorId), DeleteRecipeCommand>()
+            .Map(dest => dest.RecipeId, src => RecipeId.Create(src.recipeId))
+            .Map(dest => dest.CreatorId, src => UserId.Create(src.creatorId!.Value));
     }
 }
