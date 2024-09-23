@@ -7,6 +7,8 @@ public interface IRecipeRepository
 {
     Recipe? GetRecipeById(RecipeId recipeId);
     
+    List<Recipe> GetRecipes(int page, int pageSize);
+    
     void AddRecipe(Recipe recipe);
     
     void DeleteRecipe(Recipe recipe);

@@ -18,6 +18,14 @@ public class RecipeRepository : IRecipeRepository
         return _dbContext.Recipes.Find(recipeId);
     }
 
+    public List<Recipe> GetRecipes(int page, int pageSize)
+    {
+        return _dbContext.Recipes
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+    }
+
     public void AddRecipe(Recipe recipe)
     {
         _dbContext.Recipes.Add(recipe);
