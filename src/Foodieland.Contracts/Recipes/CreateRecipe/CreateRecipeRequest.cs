@@ -1,4 +1,4 @@
-namespace Foodieland.Contracts.Recipes;
+namespace Foodieland.Contracts.Recipes.CreateRecipe;
 
 public record CreateRecipeRequest(
     string Name,
