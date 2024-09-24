@@ -11,15 +11,24 @@ namespace Foodieland.Application.Recipes.Commands.CreateRecipe;
 public class CreateRecipeCommandHandler : IRequestHandler<CreateRecipeCommand, ErrorOr<Recipe>>
 {
     private readonly IRecipeRepository _recipeRepository;
+    private readonly IUserRepository _userRepository;
 
-    public CreateRecipeCommandHandler(IRecipeRepository recipeRepository)
+    public CreateRecipeCommandHandler(IRecipeRepository recipeRepository, IUserRepository userRepository)
     {
         _recipeRepository = recipeRepository;
+        _userRepository = userRepository;
     }
 
     public async Task<ErrorOr<Recipe>> Handle(CreateRecipeCommand request, CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
+        
+        var recipeCreator = _userRepository.GetUserById(UserId.Create(request.CreatorId));
+
+        if (recipeCreator is null)
+        {
+            return Error.NotFound("User.NotFound", "User not found or doesn't exist");
+        }
         
         var recipe = Recipe.Create(
             name: request.Name,
@@ -40,6 +49,8 @@ public class CreateRecipeCommandHandler : IRequestHandler<CreateRecipeCommand, E
                 quantity: ingredient.Quantity,
                 unit: ingredient.Unit))
         );
+        
+        recipeCreator.AddRecipe(recipe.Id);
         
         _recipeRepository.AddRecipe(recipe);
         
