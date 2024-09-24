@@ -1,6 +1,5 @@
 using ErrorOr;
 using Foodieland.Application.Common.Interfaces.Persistence;
-using Foodieland.Domain.RecipeAggregate.Events;
 using MediatR;
 
 namespace Foodieland.Application.Recipes.Commands.DeleteRecipe;
@@ -9,14 +8,24 @@ public class DeleteRecipeCommandHandler : IRequestHandler<DeleteRecipeCommand, E
 {
     private readonly IRecipeRepository _recipeRepository;
     
-    public DeleteRecipeCommandHandler(IRecipeRepository recipeRepository)
+    private readonly IUserRepository _userRepository;
+    
+    public DeleteRecipeCommandHandler(IRecipeRepository recipeRepository, IUserRepository userRepository)
     {
         _recipeRepository = recipeRepository;
+        _userRepository = userRepository;
     }
 
     public async Task<ErrorOr<Unit>> Handle(DeleteRecipeCommand request, CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
+        
+        var recipeCreator = _userRepository.GetUserById(request.CreatorId);
+
+        if (recipeCreator is null)
+        {
+            return Error.NotFound("User.NotFound", "User not found or doesn't exist");
+        }
         
         var recipe = _recipeRepository.GetRecipeById(request.RecipeId);
 
@@ -30,7 +39,7 @@ public class DeleteRecipeCommandHandler : IRequestHandler<DeleteRecipeCommand, E
             return Error.Unauthorized("Recipe.Unauthorized", "You are not authorized to delete this recipe.");
         }
         
-        recipe.AddDomainEvent(new RecipeDeleted(recipe));
+        recipeCreator.RemoveRecipe(request.RecipeId);
         
         _recipeRepository.DeleteRecipe(recipe);
 
