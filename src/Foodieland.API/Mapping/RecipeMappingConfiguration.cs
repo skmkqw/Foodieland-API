@@ -1,5 +1,7 @@
 using Foodieland.Application.Recipes.Commands.CreateRecipe;
 using Foodieland.Application.Recipes.Commands.DeleteRecipe;
+using Foodieland.Application.Recipes.Queries.GetRecipe;
+using Foodieland.Application.Recipes.Queries.GetRecipes;
 using Foodieland.Contracts.Recipes.Common;
 using Foodieland.Contracts.Recipes.CreateRecipe;
 using Foodieland.Domain.RecipeAggregate;
@@ -38,5 +40,8 @@ public class RecipeMappingConfiguration : IRegister
         config.NewConfig<(Guid recipeId, Guid? creatorId), DeleteRecipeCommand>()
             .Map(dest => dest.RecipeId, src => RecipeId.Create(src.recipeId))
             .Map(dest => dest.CreatorId, src => UserId.Create(src.creatorId!.Value));
+
+        config.NewConfig<Guid, GetRecipeQuery>()
+            .Map(dest => dest.RecipeId, src => RecipeId.Create(src));
     }
 }
