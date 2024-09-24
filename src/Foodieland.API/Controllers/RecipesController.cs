@@ -1,10 +1,8 @@
-using System.Security.Claims;
-using ErrorOr;
 using Foodieland.Application.Recipes.Commands.CreateRecipe;
 using Foodieland.Application.Recipes.Commands.DeleteRecipe;
 using Foodieland.Application.Recipes.Queries.GetRecipe;
 using Foodieland.Application.Recipes.Queries.GetRecipes;
-using Foodieland.Contracts.Recipes;
+using Foodieland.Application.Recipes.Queries.GetUserRecipes;
 using Foodieland.Contracts.Recipes.Common;
 using Foodieland.Contracts.Recipes.CreateRecipe;
 using Foodieland.Contracts.Recipes.GetRecipes;
@@ -49,6 +47,19 @@ public class RecipesController : ApiController
         var getRecipesResult = await _mediator.Send(query);
         
         return Ok(getRecipesResult.Select(r => _mapper.Map<GetRecipeResponse>(r)));
+    }
+
+    [AllowAnonymous]
+    [HttpGet("/users/{userId}/recipes")]
+    public async Task<IActionResult> GetUserRecipes([FromRoute] Guid userId, [FromQuery] GetRecipesRequest queryParams)
+    {
+        var query = _mapper.Map<GetUserRecipesQuery>((userId, queryParams));
+        
+        var getUserRecipesResult = await _mediator.Send(query);
+        
+        return getUserRecipesResult.Match(
+            onValue: recipes => Ok(recipes.Select(r => _mapper.Map<GetRecipeResponse>(r))),
+            onError: errors => Problem(errors));
     }
 
     [HttpPost("/recipes")]
