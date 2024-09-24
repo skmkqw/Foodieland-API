@@ -32,13 +32,17 @@ public class RecipeRepository : IRecipeRepository
         return new PagedResult<Recipe>(recipes, totalRecipes, page, pageSize);
     }
 
-    public List<Recipe> GetUserRecipes(UserId userId, int page, int pageSize)
+    public PagedResult<Recipe> GetUserRecipes(UserId userId, int page, int pageSize)
     {
-        return _dbContext.Recipes
+        var totalRecipes = _dbContext.Recipes.Count(r => r.CreatorId == userId);
+        
+        var userRecipes = _dbContext.Recipes
             .Where(r => r.CreatorId == userId)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToList();
+        
+        return new PagedResult<Recipe>(userRecipes, totalRecipes, page, pageSize);
     }
 
     public void AddRecipe(Recipe recipe)

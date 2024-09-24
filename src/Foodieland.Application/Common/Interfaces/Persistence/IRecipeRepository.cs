@@ -11,7 +11,7 @@ public interface IRecipeRepository
     
     PagedResult<Recipe> GetRecipes(int page, int pageSize);
     
-    List<Recipe> GetUserRecipes(UserId userId, int page, int pageSize);
+    PagedResult<Recipe> GetUserRecipes(UserId userId, int page, int pageSize);
     
     void AddRecipe(Recipe recipe);
     
