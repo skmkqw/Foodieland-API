@@ -1,6 +1,5 @@
 using ErrorOr;
 using Foodieland.Application.Common.Interfaces.Persistence;
-using Foodieland.Domain.UserAggregate.Events;
 using MediatR;
 
 namespace Foodieland.Application.Users.Commands;
@@ -9,9 +8,12 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Error
 {
     private readonly IUserRepository _userRepository;
     
-    public DeleteUserCommandHandler(IUserRepository userRepository)
+    private readonly IRecipeRepository _recipeRepository;
+    
+    public DeleteUserCommandHandler(IUserRepository userRepository, IRecipeRepository recipeRepository)
     {
         _userRepository = userRepository;
+        _recipeRepository = recipeRepository;
     }
 
     public async Task<ErrorOr<Unit>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
@@ -30,7 +32,13 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Error
             return Error.Unauthorized("User.Unauthorized", "You are not authorized to delete this account.");
         }
         
-        user.AddDomainEvent(new UserDeleted(user));
+        //TODO INTRODUCE A SEPARATE REPOSITORY METHOD
+        var recipes = _recipeRepository.GetUserRecipes(user.Id, 1, int.MaxValue);
+        
+        foreach (var recipe in recipes.Items)
+        {
+            _recipeRepository.DeleteRecipe(recipe);
+        }
         
         _userRepository.DeleteUser(user);
         
