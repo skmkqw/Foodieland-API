@@ -1,6 +1,5 @@
 using Foodieland.Domain.Common.Models;
 using Foodieland.Domain.RecipeAggregate.Entities;
-using Foodieland.Domain.RecipeAggregate.Events;
 using Foodieland.Domain.RecipeAggregate.ValueObjects;
 using Foodieland.Domain.ReviewAggregate.ValueObjects;
 using Foodieland.Domain.UserAggregate.ValueObjects;
