@@ -1,11 +1,12 @@
 using ErrorOr;
 using Foodieland.Application.Common.Interfaces.Persistence;
+using Foodieland.Application.Common.Models;
 using Foodieland.Domain.RecipeAggregate;
 using MediatR;
 
 namespace Foodieland.Application.Recipes.Queries.GetUserRecipes;
 
-public class GetUserRecipesQueryHandler : IRequestHandler<GetUserRecipesQuery, ErrorOr<List<Recipe>>>
+public class GetUserRecipesQueryHandler : IRequestHandler<GetUserRecipesQuery, ErrorOr<PagedResult<Recipe>>>
 {
     private readonly IRecipeRepository _recipeRepository;
     
@@ -17,7 +18,7 @@ public class GetUserRecipesQueryHandler : IRequestHandler<GetUserRecipesQuery, E
         _userRepository = userRepository;
     }
 
-    public async Task<ErrorOr<List<Recipe>>> Handle(GetUserRecipesQuery request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<PagedResult<Recipe>>> Handle(GetUserRecipesQuery request, CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
         
