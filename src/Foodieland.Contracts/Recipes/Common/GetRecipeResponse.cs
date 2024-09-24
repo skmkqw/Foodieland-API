@@ -1,6 +1,6 @@
-namespace Foodieland.Contracts.Recipes;
+namespace Foodieland.Contracts.Recipes.Common;
 
-public record CreateRecipeResponse(
+public record GetRecipeResponse(
     string Id,
     string Name,
     string Description,
