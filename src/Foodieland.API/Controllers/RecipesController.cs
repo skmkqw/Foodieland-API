@@ -58,7 +58,7 @@ public class RecipesController : ApiController
         var getUserRecipesResult = await _mediator.Send(query);
         
         return getUserRecipesResult.Match(
-            onValue: recipes => Ok(recipes.Select(r => _mapper.Map<GetRecipeResponse>(r))),
+            onValue: recipes => Ok(_mapper.Map<GetRecipesResponse>(recipes)),
             onError: errors => Problem(errors));
     }
 
