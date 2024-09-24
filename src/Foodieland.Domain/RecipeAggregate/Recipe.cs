@@ -75,9 +75,7 @@ public sealed class Recipe : AggregateRoot<RecipeId>
             nutritionInformation,
             cookingDirections,
             ingredients);
-
-        recipe.AddDomainEvent(new RecipeCreated(recipe));
-
+        
         return recipe;
     }
     
