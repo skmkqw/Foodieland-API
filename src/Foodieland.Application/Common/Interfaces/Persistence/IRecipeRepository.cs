@@ -1,3 +1,4 @@
+using Foodieland.Application.Common.Models;
 using Foodieland.Domain.RecipeAggregate;
 using Foodieland.Domain.RecipeAggregate.ValueObjects;
 using Foodieland.Domain.UserAggregate.ValueObjects;
@@ -8,7 +9,7 @@ public interface IRecipeRepository
 {
     Recipe? GetRecipeById(RecipeId recipeId);
     
-    List<Recipe> GetRecipes(int page, int pageSize);
+    PagedResult<Recipe> GetRecipes(int page, int pageSize);
     
     List<Recipe> GetUserRecipes(UserId userId, int page, int pageSize);
     

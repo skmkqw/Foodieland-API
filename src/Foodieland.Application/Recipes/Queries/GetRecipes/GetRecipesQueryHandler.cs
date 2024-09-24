@@ -1,10 +1,11 @@
 using Foodieland.Application.Common.Interfaces.Persistence;
+using Foodieland.Application.Common.Models;
 using Foodieland.Domain.RecipeAggregate;
 using MediatR;
 
 namespace Foodieland.Application.Recipes.Queries.GetRecipes;
 
-public class GetRecipesQueryHandler : IRequestHandler<GetRecipesQuery, List<Recipe>>
+public class GetRecipesQueryHandler : IRequestHandler<GetRecipesQuery, PagedResult<Recipe>>
 {
     private readonly IRecipeRepository _recipeRepository;
 
@@ -13,7 +14,7 @@ public class GetRecipesQueryHandler : IRequestHandler<GetRecipesQuery, List<Reci
         _recipeRepository = recipeRepository;
     }
 
-    public async Task<List<Recipe>> Handle(GetRecipesQuery request, CancellationToken cancellationToken)
+    public async Task<PagedResult<Recipe>> Handle(GetRecipesQuery request, CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
         

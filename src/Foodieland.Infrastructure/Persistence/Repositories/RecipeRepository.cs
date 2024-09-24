@@ -1,4 +1,5 @@
 using Foodieland.Application.Common.Interfaces.Persistence;
+using Foodieland.Application.Common.Models;
 using Foodieland.Domain.RecipeAggregate;
 using Foodieland.Domain.RecipeAggregate.ValueObjects;
 using Foodieland.Domain.UserAggregate.ValueObjects;
@@ -19,12 +20,16 @@ public class RecipeRepository : IRecipeRepository
         return _dbContext.Recipes.Find(recipeId);
     }
 
-    public List<Recipe> GetRecipes(int page, int pageSize)
+    public PagedResult<Recipe> GetRecipes(int page, int pageSize)
     {
-        return _dbContext.Recipes
+        var totalRecipes = _dbContext.Recipes.Count();
+        
+        var recipes = _dbContext.Recipes
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToList();
+        
+        return new PagedResult<Recipe>(recipes, totalRecipes, page, pageSize);
     }
 
     public List<Recipe> GetUserRecipes(UserId userId, int page, int pageSize)
