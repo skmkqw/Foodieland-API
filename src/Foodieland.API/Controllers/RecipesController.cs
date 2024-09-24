@@ -46,7 +46,7 @@ public class RecipesController : ApiController
         
         var getRecipesResult = await _mediator.Send(query);
         
-        return Ok(getRecipesResult.Select(r => _mapper.Map<GetRecipeResponse>(r)));
+        return Ok(_mapper.Map<GetRecipesResponse>(getRecipesResult));
     }
 
     [AllowAnonymous]

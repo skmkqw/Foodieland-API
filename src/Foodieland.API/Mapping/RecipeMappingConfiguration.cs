@@ -1,3 +1,4 @@
+using Foodieland.Application.Common.Models;
 using Foodieland.Application.Recipes.Commands.CreateRecipe;
 using Foodieland.Application.Recipes.Commands.DeleteRecipe;
 using Foodieland.Application.Recipes.Queries.GetRecipe;
@@ -32,6 +33,13 @@ public class RecipeMappingConfiguration : IRegister
             .Map(dest => dest.Id, src => src.Id.Value)
             .Map(dest => dest.CreatorId, src => src.CreatorId.Value)
             .Map(dest => dest.ReviewIds, src => src.ReviewIds.Select(id => id.Value).ToList());
+        
+        config.NewConfig<PagedResult<Recipe>, GetRecipesResponse>()
+            .Map(dest => dest.Recipes, src => src.Items)
+            .Map(dest => dest.Pagination, src => new Pagination(
+                src.Page, 
+                src.PageSize, 
+                src.TotalCount));
         
         config.NewConfig<CookingDirection, CookingDirectionResponse>()
             .Map(dest => dest.Id, src => src.Id.Value);
