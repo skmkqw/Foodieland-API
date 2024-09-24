@@ -2,6 +2,7 @@ using System.Security.Claims;
 using ErrorOr;
 using Foodieland.Application.Recipes.Commands.CreateRecipe;
 using Foodieland.Application.Recipes.Commands.DeleteRecipe;
+using Foodieland.Application.Recipes.Queries.GetRecipe;
 using Foodieland.Application.Recipes.Queries.GetRecipes;
 using Foodieland.Contracts.Recipes;
 using Foodieland.Contracts.Recipes.Common;
@@ -24,6 +25,19 @@ public class RecipesController : ApiController
     {
         _mapper = mapper;
         _mediator = mediator;
+    }
+
+    [AllowAnonymous]
+    [HttpGet("/recipes/{recipeId}")]
+    public async Task<IActionResult> GetRecipeById([FromRoute] Guid recipeId)
+    {
+        var query =_mapper.Map<GetRecipeQuery>(recipeId);
+        
+        var getRecipeResult = await _mediator.Send(query);
+        
+        return getRecipeResult.Match(
+            onValue: recipe => Ok(_mapper.Map<GetRecipeResponse>(recipe)),
+            onError: errors => Problem(errors));
     }
     
     [AllowAnonymous]
