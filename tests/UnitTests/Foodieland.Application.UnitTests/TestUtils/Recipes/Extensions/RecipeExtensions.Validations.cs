@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Foodieland.Application.Recipes.Commands.Common;
 using Foodieland.Application.Recipes.Commands.CreateRecipe;
 using Foodieland.Domain.RecipeAggregate;
 using Foodieland.Domain.RecipeAggregate.Entities;
@@ -20,7 +21,7 @@ public static partial class RecipeExtensions
 
 
         static void VaildateNutritionInformation(NutritionInformation nutritionInformation,
-            CreateNutritionInformationCommand nutritionInformationCommand)
+            CreateOrUpdateNutritionInformationCommand nutritionInformationCommand)
         {
             nutritionInformation.Calories.Should().Be(nutritionInformationCommand.Calories);
             nutritionInformation.Protein.Should().Be(nutritionInformationCommand.Protein);
@@ -29,7 +30,7 @@ public static partial class RecipeExtensions
         }
 
         static void ValidateDirection(CookingDirection cookingDirection,
-            CreateCookingDirectionCommand createCookingDirectionCommand)
+            CreateOrUpdateCookingDirectionCommand createCookingDirectionCommand)
         {
             cookingDirection.Id.Should().NotBeNull();
             cookingDirection.Name.Should().Be(createCookingDirectionCommand.Name);
@@ -37,7 +38,7 @@ public static partial class RecipeExtensions
             cookingDirection.StepNumber.Should().Be(createCookingDirectionCommand.StepNumber);
         }
 
-        static void ValidateIngredient(Ingredient ingredient, CreateIngredientCommand createIngredientCommand)
+        static void ValidateIngredient(Ingredient ingredient, CreateOrUpdateIngredientCommand createIngredientCommand)
         {
             ingredient.Id.Should().NotBeNull();
             ingredient.Name.Should().Be(createIngredientCommand.Name);

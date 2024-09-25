@@ -1,3 +1,4 @@
+using Foodieland.Application.Recipes.Commands.Common;
 using Foodieland.Application.Recipes.Commands.CreateRecipe;
 using Foodieland.Application.UnitTests.TestUtils.Constants;
 
@@ -6,8 +7,8 @@ namespace Foodieland.Application.UnitTests.Recipes.Commands.TestUtils;
 public static class CreateRecipeCommandUtils
 {
     public static CreateRecipeCommand CreateCommand(
-        List<CreateCookingDirectionCommand>? directions = null,
-        List<CreateIngredientCommand>? ingredients = null) =>
+        List<CreateOrUpdateCookingDirectionCommand>? directions = null,
+        List<CreateOrUpdateIngredientCommand>? ingredients = null) =>
         new CreateRecipeCommand(
             Constants.Recipe.Name,
             Constants.Recipe.Description,
@@ -18,24 +19,24 @@ public static class CreateRecipeCommandUtils
             ingredients ?? CreateIngredientsCommand(1)
         );
 
-    public static List<CreateCookingDirectionCommand> CreateDirectionsCommand(int directionCount) =>
+    public static List<CreateOrUpdateCookingDirectionCommand> CreateDirectionsCommand(int directionCount) =>
         Enumerable.Range(1, directionCount + 1)
-            .Select(index =>  new CreateCookingDirectionCommand(
+            .Select(index =>  new CreateOrUpdateCookingDirectionCommand(
                 index,
                 Constants.Recipe.DirectionNameFromIndex(index),
                 Constants.Recipe.DirectionDescriptionFromIndex(index)
             )).ToList();
     
-    public static List<CreateIngredientCommand> CreateIngredientsCommand(int ingredientCount) =>
+    public static List<CreateOrUpdateIngredientCommand> CreateIngredientsCommand(int ingredientCount) =>
         Enumerable.Range(0, ingredientCount)
-            .Select(index =>  new CreateIngredientCommand(
+            .Select(index =>  new CreateOrUpdateIngredientCommand(
                 Constants.Recipe.IngredientNameFromIndex(index),
                 10,
                 "grams"
             )).ToList();
 
-    public static CreateNutritionInformationCommand CreateNutritionInformationCommand() =>
-        new CreateNutritionInformationCommand(
+    public static CreateOrUpdateNutritionInformationCommand CreateNutritionInformationCommand() =>
+        new CreateOrUpdateNutritionInformationCommand(
             Constants.Recipe.Calories,
             Constants.Recipe.Protein,
             Constants.Recipe.Carbs,
