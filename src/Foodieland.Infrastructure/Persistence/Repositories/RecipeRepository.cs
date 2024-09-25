@@ -54,4 +54,10 @@ public class RecipeRepository : IRecipeRepository
     {
         _dbContext.Recipes.Remove(recipe);
     }
+
+    public void DeleteRecipesByUserId(UserId userId)
+    {
+        var userRecipes = _dbContext.Recipes.Where(r => r.CreatorId == userId);
+        _dbContext.Recipes.RemoveRange(userRecipes);
+    }
 }
