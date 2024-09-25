@@ -31,6 +31,9 @@ public static class DependencyInjection
     private static IServiceCollection AddPersistence(this IServiceCollection services)
     {
         services.AddDbContext<FoodielandDbContext>(options => options.UseSqlServer("Data Source=localhost;Initial Catalog=FoodielandDatabase;User Id=sa;Password=skmkqw04012006Tima;Integrated Security=True;TrustServerCertificate=true;Trusted_Connection=false"));
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        
         services.AddScoped<IUserRepository, UserRepository>(); 
         services.AddScoped<IRecipeRepository, RecipeRepository>();
         services.AddScoped<PublishDomainEventsInterceptor>();
