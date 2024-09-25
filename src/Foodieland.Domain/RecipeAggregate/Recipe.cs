@@ -16,10 +16,6 @@ public sealed class Recipe : AggregateRoot<RecipeId>
     
     public UserId CreatorId { get; private set;}
     
-    public DateTime CreatedDateTime { get; private set;}
-    
-    public DateTime UpdateDateTime { get; private set;}
-    
     public NutritionInformation NutritionInformation { get; private set;}
     
     public IReadOnlyList<CookingDirection> Directions => _directions.AsReadOnly();
@@ -39,8 +35,6 @@ public sealed class Recipe : AggregateRoot<RecipeId>
         string description,
         int timeToCook,
         UserId creatorId,
-        DateTime createdDateTime,
-        DateTime updateDateTime, 
         NutritionInformation nutritionInformation,
         List<CookingDirection> cookingDirections,
         List<Ingredient> ingredients) : base(id)
@@ -49,8 +43,6 @@ public sealed class Recipe : AggregateRoot<RecipeId>
         Description = description;
         TimeToCook = timeToCook;
         CreatorId = creatorId;
-        CreatedDateTime = createdDateTime;
-        UpdateDateTime = updateDateTime;
         NutritionInformation = nutritionInformation;
         _directions = cookingDirections;
         _ingredients = ingredients;
@@ -69,8 +61,6 @@ public sealed class Recipe : AggregateRoot<RecipeId>
             description,
             timeToCook,
             creatorId,
-            DateTime.UtcNow,
-            DateTime.UtcNow,
             nutritionInformation,
             cookingDirections,
             ingredients);
