@@ -24,9 +24,9 @@ public sealed class Recipe : AggregateRoot<RecipeId>
     
     public IReadOnlyList<ReviewId> ReviewIds => _reviewIds.AsReadOnly();
 
-    private readonly List<CookingDirection> _directions;
+    private List<CookingDirection> _directions;
     
-    private readonly List<Ingredient> _ingredients;
+    private List<Ingredient> _ingredients;
     
     private readonly List<ReviewId> _reviewIds = new();
     
@@ -66,6 +66,21 @@ public sealed class Recipe : AggregateRoot<RecipeId>
             ingredients);
         
         return recipe;
+    }
+
+    public void Update(string name,
+        string description,
+        int timeToCook,
+        NutritionInformation nutritionInformation,
+        List<CookingDirection> cookingDirections,
+        List<Ingredient> ingredients)
+    {
+        Name = name;
+        Description = description;
+        TimeToCook = timeToCook;
+        NutritionInformation = nutritionInformation;
+        _directions = cookingDirections;
+        _ingredients = ingredients;
     }
     
 #pragma warning disable CS8618
