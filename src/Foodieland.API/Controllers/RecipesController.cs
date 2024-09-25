@@ -1,10 +1,11 @@
 using Foodieland.Application.Recipes.Commands.CreateRecipe;
 using Foodieland.Application.Recipes.Commands.DeleteRecipe;
+using Foodieland.Application.Recipes.Commands.UpdateRecipe;
 using Foodieland.Application.Recipes.Queries.GetRecipe;
 using Foodieland.Application.Recipes.Queries.GetRecipes;
 using Foodieland.Application.Recipes.Queries.GetUserRecipes;
 using Foodieland.Contracts.Recipes.Common;
-using Foodieland.Contracts.Recipes.CreateRecipe;
+using Foodieland.Contracts.Recipes.CreateOrUpdateRecipe;
 using Foodieland.Contracts.Recipes.GetRecipes;
 using MapsterMapper;
 using MediatR;
@@ -63,7 +64,7 @@ public class RecipesController : ApiController
     }
 
     [HttpPost("/recipes")]
-    public async Task<IActionResult> CreateRecipe([FromBody] CreateRecipeRequest request)
+    public async Task<IActionResult> CreateRecipe([FromBody] CreateOrUpdateRecipeRequest request)
     {
         var userId = GetUserId();
         if (!userId.HasValue)
@@ -76,7 +77,25 @@ public class RecipesController : ApiController
         var createRecipeResult = await _mediator.Send(command);
         
         return createRecipeResult.Match(
-            onValue: recipe => Ok(_mapper.Map<CreateRecipeResponse>(recipe)),
+            onValue: recipe => Ok(_mapper.Map<CreateOrUpdateRecipeResponse>(recipe)),
+            onError: errors => Problem(errors));
+    }
+
+    [HttpPut("/recipes/{recipeId}")]
+    public async Task<IActionResult> UpdateRecipe([FromRoute] Guid recipeId, [FromBody] CreateOrUpdateRecipeRequest request)
+    {
+        var userId = GetUserId();
+        if (!userId.HasValue)
+        {
+            return UnauthorizedUserIdProblem();
+        }
+
+        var command = _mapper.Map<UpdateRecipeCommand>((request, userId, recipeId));
+        
+        var updateRecipeResult = await _mediator.Send(command);
+        
+        return updateRecipeResult.Match(
+            onValue: recipe => Ok(_mapper.Map<CreateOrUpdateRecipeResponse>(recipe)),
             onError: errors => Problem(errors));
     }
 

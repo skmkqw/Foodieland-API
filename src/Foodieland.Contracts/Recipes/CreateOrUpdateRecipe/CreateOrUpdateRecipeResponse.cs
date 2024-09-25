@@ -1,8 +1,8 @@
 using Foodieland.Contracts.Recipes.Common;
 
-namespace Foodieland.Contracts.Recipes.CreateRecipe;
+namespace Foodieland.Contracts.Recipes.CreateOrUpdateRecipe;
 
-public record CreateRecipeResponse(
+public record CreateOrUpdateRecipeResponse(
     string Id,
     string Name,
     string Description,

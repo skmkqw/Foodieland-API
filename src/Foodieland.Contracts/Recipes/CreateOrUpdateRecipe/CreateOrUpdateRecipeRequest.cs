@@ -1,6 +1,6 @@
-namespace Foodieland.Contracts.Recipes.CreateRecipe;
+namespace Foodieland.Contracts.Recipes.CreateOrUpdateRecipe;
 
-public record CreateRecipeRequest(
+public record CreateOrUpdateRecipeRequest(
     string Name,
     string Description,
     int TimeToCook,

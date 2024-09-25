@@ -50,6 +50,11 @@ public class RecipeRepository : IRecipeRepository
         _dbContext.Recipes.Add(recipe);
     }
 
+    public void UpdateRecipe(Recipe recipe)
+    {
+        _dbContext.Recipes.Update(recipe);
+    }
+
     public void DeleteRecipe(Recipe recipe)
     {
         _dbContext.Recipes.Remove(recipe);
