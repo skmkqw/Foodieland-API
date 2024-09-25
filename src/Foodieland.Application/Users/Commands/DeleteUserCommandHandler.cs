@@ -33,13 +33,7 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Error
             return Error.Unauthorized("User.Unauthorized", "You are not authorized to delete this account.");
         }
         
-        //TODO INTRODUCE A SEPARATE REPOSITORY METHOD
-        var recipes = _recipeRepository.GetUserRecipes(user.Id, 1, int.MaxValue);
-        
-        foreach (var recipe in recipes.Items)
-        {
-            _recipeRepository.DeleteRecipe(recipe);
-        }
+        _recipeRepository.DeleteRecipesByUserId(user.Id);
         
         _userRepository.DeleteUser(user);
         
