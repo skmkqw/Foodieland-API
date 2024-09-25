@@ -10,16 +10,17 @@ public class DeleteRecipeCommandHandler : IRequestHandler<DeleteRecipeCommand, E
     
     private readonly IUserRepository _userRepository;
     
-    public DeleteRecipeCommandHandler(IRecipeRepository recipeRepository, IUserRepository userRepository)
+    private readonly IUnitOfWork _unitOfWork;
+    
+    public DeleteRecipeCommandHandler(IRecipeRepository recipeRepository, IUserRepository userRepository, IUnitOfWork unitOfWork)
     {
         _recipeRepository = recipeRepository;
         _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<Unit>> Handle(DeleteRecipeCommand request, CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
-        
         var recipeCreator = _userRepository.GetUserById(request.CreatorId);
 
         if (recipeCreator is null)
@@ -42,6 +43,8 @@ public class DeleteRecipeCommandHandler : IRequestHandler<DeleteRecipeCommand, E
         recipeCreator.RemoveRecipe(request.RecipeId);
         
         _recipeRepository.DeleteRecipe(recipe);
+        
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;
     }
