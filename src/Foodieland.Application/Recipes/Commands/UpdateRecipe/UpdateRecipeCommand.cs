@@ -1,4 +1,5 @@
 using ErrorOr;
+using Foodieland.Application.Recipes.Commands.Common;
 using Foodieland.Domain.RecipeAggregate;
 using Foodieland.Domain.RecipeAggregate.ValueObjects;
 using Foodieland.Domain.UserAggregate.ValueObjects;
@@ -12,12 +13,6 @@ public record UpdateRecipeCommand(
     string Name,
     string Description,
     int TimeToCook,
-    UpdateNutritionInformationCommand NutritionInformation,
-    List<UpdateCookingDirectionCommand> Directions,
-    List<UpdateIngredientCommand> Ingredients) : IRequest<ErrorOr<Recipe>>;
-
-public record UpdateNutritionInformationCommand(int Calories, float Protein, float Carbs, float Fat);
-
-public record UpdateCookingDirectionCommand(int StepNumber, string Name, string Description);
-
-public record UpdateIngredientCommand(string Name, float Quantity, string Unit);
+    CreateOrUpdateNutritionInformationCommand NutritionInformation,
+    List<CreateOrUpdateCookingDirectionCommand> Directions,
+    List<CreateOrUpdateIngredientCommand> Ingredients) : IRequest<ErrorOr<Recipe>>;
