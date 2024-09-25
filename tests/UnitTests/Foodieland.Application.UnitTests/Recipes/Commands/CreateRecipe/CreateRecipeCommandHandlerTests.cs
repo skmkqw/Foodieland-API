@@ -14,12 +14,15 @@ public class CreateRecipeCommandHandlerTests
     private readonly Mock<IRecipeRepository> _mockRecipeRepository;
     
     private readonly Mock<IUserRepository> _mockUserRepository;
+    
+    private readonly Mock<IUnitOfWork> _mockUnitOfWork;
 
     public CreateRecipeCommandHandlerTests()
     {
         _mockRecipeRepository = new Mock<IRecipeRepository>();
         _mockUserRepository = new Mock<IUserRepository>();
-        _commandHandler = new CreateRecipeCommandHandler(_mockRecipeRepository.Object, _mockUserRepository.Object);
+        _mockUnitOfWork = new Mock<IUnitOfWork>();
+        _commandHandler = new CreateRecipeCommandHandler(_mockRecipeRepository.Object, _mockUserRepository.Object, _mockUnitOfWork.Object);
     }
     
     [Theory]
@@ -35,6 +38,7 @@ public class CreateRecipeCommandHandlerTests
         
         _mockRecipeRepository.Verify(m => m.AddRecipe(result.Value), Times.Once);
         _mockUserRepository.Verify(m => m.GetUserById(result.Value.CreatorId), Times.Once);
+        _mockUnitOfWork.Verify(m => m.SaveChangesAsync(default), Times.Once);
     }
 
     public static IEnumerable<object[]> ValidCreateRecipeCommands()
