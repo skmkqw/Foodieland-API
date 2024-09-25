@@ -11,18 +11,20 @@ namespace Foodieland.Application.Recipes.Commands.CreateRecipe;
 public class CreateRecipeCommandHandler : IRequestHandler<CreateRecipeCommand, ErrorOr<Recipe>>
 {
     private readonly IRecipeRepository _recipeRepository;
+    
     private readonly IUserRepository _userRepository;
+    
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateRecipeCommandHandler(IRecipeRepository recipeRepository, IUserRepository userRepository)
+    public CreateRecipeCommandHandler(IRecipeRepository recipeRepository, IUserRepository userRepository, IUnitOfWork unitOfWork)
     {
         _recipeRepository = recipeRepository;
         _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<Recipe>> Handle(CreateRecipeCommand request, CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
-        
         var recipeCreator = _userRepository.GetUserById(UserId.Create(request.CreatorId));
 
         if (recipeCreator is null)
@@ -53,6 +55,8 @@ public class CreateRecipeCommandHandler : IRequestHandler<CreateRecipeCommand, E
         recipeCreator.AddRecipe(recipe.Id);
         
         _recipeRepository.AddRecipe(recipe);
+        
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
         
         return recipe;
     }
