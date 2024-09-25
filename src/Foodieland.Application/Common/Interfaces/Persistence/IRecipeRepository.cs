@@ -16,4 +16,6 @@ public interface IRecipeRepository
     void AddRecipe(Recipe recipe);
     
     void DeleteRecipe(Recipe recipe);
+
+    void DeleteRecipesByUserId(UserId userId);
 }

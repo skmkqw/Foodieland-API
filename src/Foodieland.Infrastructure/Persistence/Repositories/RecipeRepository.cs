@@ -48,12 +48,16 @@ public class RecipeRepository : IRecipeRepository
     public void AddRecipe(Recipe recipe)
     {
         _dbContext.Recipes.Add(recipe);
-        _dbContext.SaveChanges();
     }
 
     public void DeleteRecipe(Recipe recipe)
     {
         _dbContext.Recipes.Remove(recipe);
-        _dbContext.SaveChanges();
+    }
+
+    public void DeleteRecipesByUserId(UserId userId)
+    {
+        var userRecipes = _dbContext.Recipes.Where(r => r.CreatorId == userId);
+        _dbContext.Recipes.RemoveRange(userRecipes);
     }
 }

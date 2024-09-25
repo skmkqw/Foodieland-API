@@ -15,25 +15,17 @@ public sealed class Review : AggregateRoot<ReviewId>
 
     public int Rating { get; }
     
-    public DateTime CreatedDateTime { get; }
-    
-    public DateTime UpdateDateTime { get; }
-    
     private Review(
         ReviewId id, 
         RecipeId type, 
         UserId creatorId, 
         string content, 
-        int rating, 
-        DateTime createdDateTime, 
-        DateTime updateDateTime) : base(id)
+        int rating) : base(id)
     {
         Type = type;
         CreatorId = creatorId;
         Content = content;
         Rating = rating;
-        CreatedDateTime = createdDateTime;
-        UpdateDateTime = updateDateTime;
     }
 
     public static Review Create(RecipeId recipeId, UserId creatorId, string content, int rating)
@@ -43,8 +35,6 @@ public sealed class Review : AggregateRoot<ReviewId>
             recipeId,
             creatorId,
             content, 
-            rating,
-            DateTime.UtcNow, 
-            DateTime.UtcNow);
+            rating);
     }
 }
