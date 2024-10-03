@@ -1,5 +1,6 @@
 using ErrorOr;
 using Foodieland.Application.Common.Interfaces.Persistence;
+using Foodieland.Domain.Common.Errors;
 using Foodieland.Domain.RecipeAggregate;
 using MediatR;
 
@@ -22,7 +23,7 @@ public class GetRecipeQueryHandler : IRequestHandler<GetRecipeQuery, ErrorOr<Rec
         
         if (recipe is null)
         {
-            return Error.NotFound("Recipe.NotFound", "Recipe not found or doesn't exist");
+            return Errors.Recipe.NotFound;
         }
         
         return recipe;

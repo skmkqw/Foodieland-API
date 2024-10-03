@@ -1,6 +1,7 @@
 using ErrorOr;
 using Foodieland.Application.Common.Interfaces.Persistence;
 using Foodieland.Application.Common.Models;
+using Foodieland.Domain.Common.Errors;
 using Foodieland.Domain.RecipeAggregate;
 using MediatR;
 
@@ -26,7 +27,7 @@ public class GetUserRecipesQueryHandler : IRequestHandler<GetUserRecipesQuery, E
 
         if (user is null)
         {
-            return Error.NotFound("User.NotFound", "User not found or doesn't exist");
+            return Errors.User.NotFound;
         }
         
         return _recipeRepository.GetUserRecipes(request.UserId, request.Page, request.PageSize);

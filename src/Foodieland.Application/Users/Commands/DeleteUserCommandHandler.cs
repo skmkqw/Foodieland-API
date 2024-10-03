@@ -1,5 +1,6 @@
 using ErrorOr;
 using Foodieland.Application.Common.Interfaces.Persistence;
+using Foodieland.Domain.Common.Errors;
 using MediatR;
 
 namespace Foodieland.Application.Users.Commands;
@@ -25,12 +26,12 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Error
 
         if (user is null)
         {
-            return Error.NotFound("User.NotFound", "User not found or doesn't exist");
+            return Errors.User.NotFound;
         }
         
         if (user.Id != request.UserIdFromClaim)
         {
-            return Error.Unauthorized("User.Unauthorized", "You are not authorized to delete this account.");
+            return Errors.User.Unauthorized;
         }
         
         _recipeRepository.DeleteRecipesByUserId(user.Id);

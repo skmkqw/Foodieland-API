@@ -1,5 +1,6 @@
 using ErrorOr;
 using Foodieland.Application.Common.Interfaces.Persistence;
+using Foodieland.Domain.Common.Errors;
 using MediatR;
 
 namespace Foodieland.Application.Recipes.Commands.DeleteRecipe;
@@ -25,19 +26,19 @@ public class DeleteRecipeCommandHandler : IRequestHandler<DeleteRecipeCommand, E
 
         if (recipeCreator is null)
         {
-            return Error.NotFound("User.NotFound", "User not found or doesn't exist");
+            return Errors.User.NotFound;
         }
         
         var recipe = _recipeRepository.GetRecipeById(request.RecipeId);
 
         if (recipe is null)
         { 
-            return Error.NotFound("Recipe.NotFound", "Recipe not found or doesn't exist");
+            return Errors.Recipe.NotFound;
         }
 
         if (recipe.CreatorId != request.CreatorId)
         {
-            return Error.Unauthorized("Recipe.Unauthorized", "You are not authorized to delete this recipe.");
+            return Errors.Recipe.Unauthorized;
         }
         
         recipeCreator.RemoveRecipe(request.RecipeId);
