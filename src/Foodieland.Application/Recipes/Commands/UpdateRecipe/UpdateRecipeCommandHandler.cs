@@ -1,5 +1,6 @@
 using ErrorOr;
 using Foodieland.Application.Common.Interfaces.Persistence;
+using Foodieland.Domain.Common.Errors;
 using Foodieland.Domain.RecipeAggregate;
 using Foodieland.Domain.RecipeAggregate.Entities;
 using Foodieland.Domain.RecipeAggregate.ValueObjects;
@@ -25,12 +26,12 @@ public class UpdateRecipeCommandHandler : IRequestHandler<UpdateRecipeCommand, E
 
         if (recipe is null)
         {
-            return Error.NotFound("Recipe.NotFound", "Recipe not found.");
+            return Errors.Recipe.NotFound;
         }
         
         if (recipe.CreatorId != request.UserId)
         {
-            return Error.Unauthorized("Recipe.Unauthorized", "You are not authorized to modify this recipe.");
+            return Errors.Recipe.Unauthorized;
         }
         
         recipe.Update(

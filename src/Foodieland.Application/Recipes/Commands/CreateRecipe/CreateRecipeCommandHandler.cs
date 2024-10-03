@@ -1,5 +1,6 @@
 using ErrorOr;
 using Foodieland.Application.Common.Interfaces.Persistence;
+using Foodieland.Domain.Common.Errors;
 using Foodieland.Domain.RecipeAggregate;
 using Foodieland.Domain.RecipeAggregate.Entities;
 using Foodieland.Domain.RecipeAggregate.ValueObjects;
@@ -29,7 +30,7 @@ public class CreateRecipeCommandHandler : IRequestHandler<CreateRecipeCommand, E
 
         if (recipeCreator is null)
         {
-            return Error.NotFound("User.NotFound", "User not found or doesn't exist");
+            return Errors.User.NotFound;
         }
         
         var recipe = Recipe.Create(
