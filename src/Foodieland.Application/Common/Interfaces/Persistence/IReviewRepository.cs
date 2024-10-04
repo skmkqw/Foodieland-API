@@ -4,5 +4,5 @@ namespace Foodieland.Application.Common.Interfaces.Persistence;
 
 public interface IReviewRepository
 {
-    Review AddReview(Review review);
+    void AddReview(Review review);
 }
