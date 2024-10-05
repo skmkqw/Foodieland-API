@@ -12,8 +12,8 @@ public class ReviewMappingConfigurations : IRegister
     public void Register(TypeAdapterConfig config)
     {
         //Guid, Guid, CreateReviewRequest => CreateReviewCommand
-        config.NewConfig<(Guid recipeId, Guid creatorId, CreateReviewRequest request), CreateReviewCommand>()
-            .Map(dest => dest.CreatorId, src => UserId.Create(src.creatorId))
+        config.NewConfig<(Guid recipeId, Guid? creatorId, CreateReviewRequest request), CreateReviewCommand>()
+            .Map(dest => dest.CreatorId, src => UserId.Create(src.creatorId!.Value))
             .Map(dest => dest.RecipeId, src => RecipeId.Create(src.recipeId))
             .Map(dest => dest, src => src.request);
         
