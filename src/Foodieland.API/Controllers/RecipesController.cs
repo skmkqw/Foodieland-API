@@ -4,8 +4,9 @@ using Foodieland.Application.Recipes.Commands.UpdateRecipe;
 using Foodieland.Application.Recipes.Queries.GetRecipe;
 using Foodieland.Application.Recipes.Queries.GetRecipes;
 using Foodieland.Application.Recipes.Queries.GetUserRecipes;
-using Foodieland.Contracts.Recipes.Common;
+using Foodieland.Contracts.Common;
 using Foodieland.Contracts.Recipes.CreateOrUpdateRecipe;
+using Foodieland.Contracts.Recipes.GetRecipe;
 using Foodieland.Contracts.Recipes.GetRecipes;
 using MapsterMapper;
 using MediatR;
@@ -41,7 +42,7 @@ public class RecipesController : ApiController
     
     [AllowAnonymous]
     [HttpGet("/recipes")]
-    public async Task<IActionResult> GetRecipes([FromQuery] GetRecipesRequest request)
+    public async Task<IActionResult> GetRecipes([FromQuery] PagedResultRequest request)
     {
         var query = _mapper.Map<GetRecipesQuery>(request);
         
@@ -52,7 +53,7 @@ public class RecipesController : ApiController
 
     [AllowAnonymous]
     [HttpGet("/users/{userId}/recipes")]
-    public async Task<IActionResult> GetUserRecipes([FromRoute] Guid userId, [FromQuery] GetRecipesRequest queryParams)
+    public async Task<IActionResult> GetUserRecipes([FromRoute] Guid userId, [FromQuery] PagedResultRequest queryParams)
     {
         var query = _mapper.Map<GetUserRecipesQuery>((userId, queryParams));
         

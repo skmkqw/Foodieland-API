@@ -1,4 +1,4 @@
-namespace Foodieland.Contracts.Recipes.Common;
+namespace Foodieland.Contracts.Recipes.GetRecipe;
 
 public record GetRecipeResponse(
     string Id,
