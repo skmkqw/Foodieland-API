@@ -1,4 +1,5 @@
 using Foodieland.Application.Common.Interfaces.Persistence;
+using Foodieland.Application.Common.Models;
 using Foodieland.Domain.RecipeAggregate.ValueObjects;
 using Foodieland.Domain.ReviewAggregate;
 using Foodieland.Domain.UserAggregate.ValueObjects;
@@ -18,6 +19,18 @@ public class ReviewRepository : IReviewRepository
     public async Task AddReview(Review review)
     {
         await _dbContext.Reviews.AddAsync(review);
+    }
+
+    public async Task<PagedResult<Review>> GetRecipeReviews(RecipeId recipeId, int page, int pageSize)
+    {
+        var totalReviews = _dbContext.Reviews.Count(r => r.RecipeId == recipeId);
+        
+        var recipeReviews = await _dbContext.Reviews.Where(r => r.RecipeId == recipeId)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+        
+        return new PagedResult<Review>(recipeReviews, totalReviews, page, pageSize);
     }
 
     public async Task<Review?> GetUserReviewForRecipe(RecipeId recipeId, UserId userId)
