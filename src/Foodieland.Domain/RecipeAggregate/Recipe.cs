@@ -83,6 +83,16 @@ public sealed class Recipe : AggregateRoot<RecipeId>
         _ingredients = ingredients;
     }
     
+    public void AddReview(ReviewId reviewId)
+    {
+        _reviewIds.Add(reviewId);
+    }
+
+    public void RemoveReview(ReviewId reviewId)
+    {
+        _reviewIds.Remove(reviewId);
+    }
+    
 #pragma warning disable CS8618
     private Recipe() 
 #pragma warning restore CS8618

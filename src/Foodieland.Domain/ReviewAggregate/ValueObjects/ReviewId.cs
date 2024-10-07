@@ -10,10 +10,15 @@ public class ReviewId : ValueObject
     {
         Value = value;
     }
-
+    
     public static ReviewId CreateUnique()
     {
         return new ReviewId(Guid.NewGuid());
+    }
+
+    public static ReviewId Create(Guid value)
+    {
+        return new ReviewId(value);
     }
     
     protected override IEnumerable<object> GetEqualityComponents()

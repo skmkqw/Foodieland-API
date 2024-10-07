@@ -1,5 +1,6 @@
 using Foodieland.Domain.Common.Models;
 using Foodieland.Domain.RecipeAggregate;
+using Foodieland.Domain.ReviewAggregate;
 using Foodieland.Domain.UserAggregate;
 using Foodieland.Infrastructure.Persistence.Interceptors;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,8 @@ public class FoodielandDbContext : DbContext
     public DbSet<User> Users { get; set; }
     
     public DbSet<Recipe> Recipes { get; set; }
+    
+    public DbSet<Review> Reviews { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

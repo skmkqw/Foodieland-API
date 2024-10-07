@@ -7,7 +7,7 @@ namespace Foodieland.Domain.ReviewAggregate;
 
 public sealed class Review : AggregateRoot<ReviewId>
 {
-    public RecipeId Type { get; }
+    public RecipeId RecipeId { get; }
 
     public UserId CreatorId { get; }
 
@@ -17,12 +17,12 @@ public sealed class Review : AggregateRoot<ReviewId>
     
     private Review(
         ReviewId id, 
-        RecipeId type, 
+        RecipeId recipeId, 
         UserId creatorId, 
         string content, 
         int rating) : base(id)
     {
-        Type = type;
+        RecipeId = recipeId;
         CreatorId = creatorId;
         Content = content;
         Rating = rating;
