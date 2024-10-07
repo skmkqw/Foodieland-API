@@ -1,4 +1,4 @@
-using Foodieland.Contracts.Recipes.Common;
+using Foodieland.Contracts.Recipes.GetRecipe;
 
 namespace Foodieland.Contracts.Recipes.CreateOrUpdateRecipe;
 

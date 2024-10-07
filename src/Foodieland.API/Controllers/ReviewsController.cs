@@ -1,7 +1,11 @@
 using Foodieland.Application.Reviews.Commands.CreateReview;
+using Foodieland.Application.Reviews.Queries.GetRecipeReviews;
+using Foodieland.Contracts.Common;
 using Foodieland.Contracts.Reviews.CreateReview;
+using Foodieland.Contracts.Reviews.GetReviews;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Foodieland.API.Controllers;
@@ -17,6 +21,19 @@ public class ReviewsController : ApiController
     {
         _mapper = mapper;
         _mediator = mediator;
+    }
+
+    [AllowAnonymous]
+    [HttpGet("recipes/{recipeId}")]
+    public async Task<IActionResult> GetRecipeReviews([FromRoute] Guid recipeId, [FromQuery] PagedResultRequest queryParams)
+    {
+        var query = _mapper.Map<GetRecipeReviewsQuery>((recipeId, queryParams));
+        
+        var getRecipeReviewsResult = await _mediator.Send(query);
+        
+        return getRecipeReviewsResult.Match(
+            onValue: recipe => Ok(_mapper.Map<GetReviewsResponse>(recipe)),
+            onError: errors => Problem(errors));
     }
 
 
