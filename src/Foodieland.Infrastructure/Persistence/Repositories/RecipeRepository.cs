@@ -3,6 +3,7 @@ using Foodieland.Application.Common.Models;
 using Foodieland.Domain.RecipeAggregate;
 using Foodieland.Domain.RecipeAggregate.ValueObjects;
 using Foodieland.Domain.UserAggregate.ValueObjects;
+using Microsoft.EntityFrameworkCore;
 
 namespace Foodieland.Infrastructure.Persistence.Repositories;
 
@@ -15,39 +16,39 @@ public class RecipeRepository : IRecipeRepository
         _dbContext = dbContext;
     }
 
-    public Recipe? GetRecipeById(RecipeId recipeId)
+    public async Task<Recipe?> GetRecipeById(RecipeId recipeId)
     {
-        return _dbContext.Recipes.Find(recipeId);
+        return await _dbContext.Recipes.FindAsync(recipeId);
     }
 
-    public PagedResult<Recipe> GetRecipes(int page, int pageSize)
+    public async Task<PagedResult<Recipe>> GetRecipes(int page, int pageSize)
     {
-        var totalRecipes = _dbContext.Recipes.Count();
+        var totalRecipes = await _dbContext.Recipes.CountAsync();
         
-        var recipes = _dbContext.Recipes
+        var recipes = await _dbContext.Recipes
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
-            .ToList();
+            .ToListAsync();
         
         return new PagedResult<Recipe>(recipes, totalRecipes, page, pageSize);
     }
 
-    public PagedResult<Recipe> GetUserRecipes(UserId userId, int page, int pageSize)
+    public async Task<PagedResult<Recipe>> GetUserRecipes(UserId userId, int page, int pageSize)
     {
-        var totalRecipes = _dbContext.Recipes.Count(r => r.CreatorId == userId);
+        var totalRecipes = await _dbContext.Recipes.CountAsync(r => r.CreatorId == userId);
         
-        var userRecipes = _dbContext.Recipes
+        var userRecipes = await _dbContext.Recipes
             .Where(r => r.CreatorId == userId)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
-            .ToList();
+            .ToListAsync();
         
         return new PagedResult<Recipe>(userRecipes, totalRecipes, page, pageSize);
     }
 
-    public void AddRecipe(Recipe recipe)
+    public async Task AddRecipe(Recipe recipe)
     {
-        _dbContext.Recipes.Add(recipe);
+        await _dbContext.Recipes.AddAsync(recipe);
     }
 
     public void UpdateRecipe(Recipe recipe)
