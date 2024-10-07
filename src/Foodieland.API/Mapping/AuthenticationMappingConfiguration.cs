@@ -25,17 +25,5 @@ public class AuthenticationMappingConfiguration : IRegister
         config.NewConfig<AuthenticationResult, AuthenticationResponse>()
             .Map(dest => dest.Id, src => src.User.Id.Value)
             .Map(dest => dest, src => src.User);
-
-        config.NewConfig<Review, GetReviewResponse>()
-            .Map(dest => dest.Id, src => src.Id.Value)
-            .Map(dest => dest.RecipeId, src => RecipeId.Create(src.RecipeId.Value))
-            .Map(dest => dest.CreatorId, src => src.CreatorId.Value);
-        
-        config.NewConfig<PagedResult<Review>, GetReviewsResponse>()
-            .Map(dest => dest.Reviews, src => src.Items)
-            .Map(dest => dest.Pagination, src => new Pagination(
-                src.Page, 
-                src.PageSize, 
-                src.TotalCount));
     }
 }

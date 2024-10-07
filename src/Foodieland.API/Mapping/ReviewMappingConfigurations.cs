@@ -1,6 +1,11 @@
+using Foodieland.Application.Common.Models;
 using Foodieland.Application.Reviews.Commands;
 using Foodieland.Application.Reviews.Commands.CreateReview;
+using Foodieland.Application.Reviews.Queries.GetRecipeReviews;
+using Foodieland.Contracts.Common;
 using Foodieland.Contracts.Reviews.CreateReview;
+using Foodieland.Contracts.Reviews.GetReview;
+using Foodieland.Contracts.Reviews.GetReviews;
 using Foodieland.Domain.RecipeAggregate.ValueObjects;
 using Foodieland.Domain.ReviewAggregate;
 using Foodieland.Domain.UserAggregate.ValueObjects;
@@ -23,5 +28,24 @@ public class ReviewMappingConfigurations : IRegister
             .Map(dest => dest.Id, src => src.Id.Value)
             .Map(dest => dest.RecipeId, src => src.RecipeId.Value)
             .Map(dest => dest.CreatorId, src => src.CreatorId.Value);
+        
+        //Guid, PagedResultRequest => GetRecipeReviewsRequest
+        config.NewConfig<(Guid recipeId, PagedResultRequest request), GetRecipeReviewsQuery>()
+            .Map(dest => dest.RecipeId, src => RecipeId.Create(src.recipeId))
+            .Map(dest => dest, src => src.request);
+        
+        //Review => GetReviewResponse
+        config.NewConfig<Review, GetReviewResponse>()
+            .Map(dest => dest.Id, src => src.Id.Value)
+            .Map(dest => dest.RecipeId, src => src.RecipeId.Value)
+            .Map(dest => dest.CreatorId, src => src.CreatorId.Value);
+        
+        //PagedResult<Review> => GetReviewsResponse
+        config.NewConfig<PagedResult<Review>, GetReviewsResponse>()
+            .Map(dest => dest.Reviews, src => src.Items)
+            .Map(dest => dest.Pagination, src => new Pagination(
+                src.Page, 
+                src.PageSize, 
+                src.TotalCount));
     }
 }
