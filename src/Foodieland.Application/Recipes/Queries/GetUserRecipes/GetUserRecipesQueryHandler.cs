@@ -21,9 +21,7 @@ public class GetUserRecipesQueryHandler : IRequestHandler<GetUserRecipesQuery, E
 
     public async Task<ErrorOr<PagedResult<Recipe>>> Handle(GetUserRecipesQuery request, CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
-        
-        var user = _userRepository.GetUserById(request.UserId);
+        var user = await _userRepository.GetUserById(request.UserId);
 
         if (user is null)
         {
