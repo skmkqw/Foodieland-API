@@ -44,7 +44,7 @@ public class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommand, E
             return Errors.Recipe.NotFound;
         }
         
-        var existingReview = _reviewRepository.GetUserReviewForRecipe(reviewedRecipe.Id, reviewCreator.Id);
+        var existingReview = await _reviewRepository.GetUserReviewForRecipe(reviewedRecipe.Id, reviewCreator.Id);
 
         if (existingReview is not null)
         {
@@ -57,7 +57,7 @@ public class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommand, E
             content: request.Content,
             rating: request.Rating);
         
-        _reviewRepository.AddReview(review);
+        await _reviewRepository.AddReview(review);
         
         reviewedRecipe.AddReview(review.Id);
         reviewCreator.AddReview(review.Id);
