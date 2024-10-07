@@ -30,7 +30,7 @@ public class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommand, E
 
     public async Task<ErrorOr<Review>> Handle(CreateReviewCommand request, CancellationToken cancellationToken)
     {
-        var reviewCreator = _userRepository.GetUserById(request.CreatorId);
+        var reviewCreator = await _userRepository.GetUserById(request.CreatorId);
 
         if (reviewCreator is null)
         {

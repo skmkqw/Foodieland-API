@@ -17,8 +17,6 @@ public class GetRecipeQueryHandler : IRequestHandler<GetRecipeQuery, ErrorOr<Rec
 
     public async Task<ErrorOr<Recipe>> Handle(GetRecipeQuery request, CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
-        
         var recipe = await _recipeRepository.GetRecipeById(request.RecipeId);
         
         if (recipe is null)

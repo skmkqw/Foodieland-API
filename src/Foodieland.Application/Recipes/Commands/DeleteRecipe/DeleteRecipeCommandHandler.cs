@@ -22,7 +22,7 @@ public class DeleteRecipeCommandHandler : IRequestHandler<DeleteRecipeCommand, E
 
     public async Task<ErrorOr<Unit>> Handle(DeleteRecipeCommand request, CancellationToken cancellationToken)
     {
-        var recipeCreator = _userRepository.GetUserById(request.CreatorId);
+        var recipeCreator = await _userRepository.GetUserById(request.CreatorId);
 
         if (recipeCreator is null)
         {
