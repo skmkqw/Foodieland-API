@@ -19,7 +19,7 @@ public class GetRecipeQueryHandler : IRequestHandler<GetRecipeQuery, ErrorOr<Rec
     {
         await Task.CompletedTask;
         
-        var recipe = _recipeRepository.GetRecipeById(request.RecipeId);
+        var recipe = await _recipeRepository.GetRecipeById(request.RecipeId);
         
         if (recipe is null)
         {

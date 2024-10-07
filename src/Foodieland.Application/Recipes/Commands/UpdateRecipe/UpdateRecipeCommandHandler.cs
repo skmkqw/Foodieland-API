@@ -22,7 +22,7 @@ public class UpdateRecipeCommandHandler : IRequestHandler<UpdateRecipeCommand, E
 
     public async Task<ErrorOr<Recipe>> Handle(UpdateRecipeCommand request, CancellationToken cancellationToken)
     {
-        var recipe = _recipeRepository.GetRecipeById(request.Id);
+        var recipe = await _recipeRepository.GetRecipeById(request.Id);
 
         if (recipe is null)
         {

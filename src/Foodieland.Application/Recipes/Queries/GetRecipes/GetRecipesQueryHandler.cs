@@ -16,8 +16,6 @@ public class GetRecipesQueryHandler : IRequestHandler<GetRecipesQuery, PagedResu
 
     public async Task<PagedResult<Recipe>> Handle(GetRecipesQuery request, CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
-        
-        return _recipeRepository.GetRecipes(request.Page, request.PageSize);
+        return await _recipeRepository.GetRecipes(request.Page, request.PageSize);
     }
 }

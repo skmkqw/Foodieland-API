@@ -55,7 +55,7 @@ public class CreateRecipeCommandHandler : IRequestHandler<CreateRecipeCommand, E
         
         recipeCreator.AddRecipe(recipe.Id);
         
-        _recipeRepository.AddRecipe(recipe);
+        await _recipeRepository.AddRecipe(recipe);
         
         await _unitOfWork.SaveChangesAsync(cancellationToken);
         

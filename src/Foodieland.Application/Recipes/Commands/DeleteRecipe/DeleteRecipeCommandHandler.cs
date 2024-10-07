@@ -29,7 +29,7 @@ public class DeleteRecipeCommandHandler : IRequestHandler<DeleteRecipeCommand, E
             return Errors.User.NotFound;
         }
         
-        var recipe = _recipeRepository.GetRecipeById(request.RecipeId);
+        var recipe = await _recipeRepository.GetRecipeById(request.RecipeId);
 
         if (recipe is null)
         { 

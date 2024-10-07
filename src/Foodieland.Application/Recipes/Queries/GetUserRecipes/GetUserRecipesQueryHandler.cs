@@ -30,6 +30,6 @@ public class GetUserRecipesQueryHandler : IRequestHandler<GetUserRecipesQuery, E
             return Errors.User.NotFound;
         }
         
-        return _recipeRepository.GetUserRecipes(request.UserId, request.Page, request.PageSize);
+        return await _recipeRepository.GetUserRecipes(request.UserId, request.Page, request.PageSize);
     }
 }

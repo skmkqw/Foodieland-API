@@ -37,7 +37,7 @@ public class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommand, E
             return Errors.User.NotFound;
         }
         
-        var reviewedRecipe = _recipeRepository.GetRecipeById(request.RecipeId);
+        var reviewedRecipe = await _recipeRepository.GetRecipeById(request.RecipeId);
 
         if (reviewedRecipe is null)
         {
