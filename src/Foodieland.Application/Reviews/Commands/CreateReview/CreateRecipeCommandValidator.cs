@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Foodieland.Application.Reviews.Commands;
+namespace Foodieland.Application.Reviews.Commands.CreateReview;
 
 public class CreateRecipeCommandValidator : AbstractValidator<CreateReviewCommand>
 {

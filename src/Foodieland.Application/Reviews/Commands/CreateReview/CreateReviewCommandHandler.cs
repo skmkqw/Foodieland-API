@@ -4,7 +4,7 @@ using Foodieland.Domain.Common.Errors;
 using Foodieland.Domain.ReviewAggregate;
 using MediatR;
 
-namespace Foodieland.Application.Reviews.Commands;
+namespace Foodieland.Application.Reviews.Commands.CreateReview;
 
 public class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommand, ErrorOr<Review>>
 {
@@ -30,21 +30,21 @@ public class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommand, E
 
     public async Task<ErrorOr<Review>> Handle(CreateReviewCommand request, CancellationToken cancellationToken)
     {
-        var reviewCreator = _userRepository.GetUserById(request.CreatorId);
+        var reviewCreator = await _userRepository.GetUserById(request.CreatorId);
 
         if (reviewCreator is null)
         {
             return Errors.User.NotFound;
         }
         
-        var reviewedRecipe = _recipeRepository.GetRecipeById(request.RecipeId);
+        var reviewedRecipe = await _recipeRepository.GetRecipeById(request.RecipeId);
 
         if (reviewedRecipe is null)
         {
             return Errors.Recipe.NotFound;
         }
         
-        var existingReview = _reviewRepository.GetUserReviewForRecipe(reviewedRecipe.Id, reviewCreator.Id);
+        var existingReview = await _reviewRepository.GetUserReviewForRecipe(reviewedRecipe.Id, reviewCreator.Id);
 
         if (existingReview is not null)
         {
@@ -57,7 +57,7 @@ public class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommand, E
             content: request.Content,
             rating: request.Rating);
         
-        _reviewRepository.AddReview(review);
+        await _reviewRepository.AddReview(review);
         
         reviewedRecipe.AddReview(review.Id);
         reviewCreator.AddReview(review.Id);

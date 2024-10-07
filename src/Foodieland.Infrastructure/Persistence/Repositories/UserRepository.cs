@@ -1,6 +1,7 @@
 using Foodieland.Application.Common.Interfaces.Persistence;
 using Foodieland.Domain.UserAggregate;
 using Foodieland.Domain.UserAggregate.ValueObjects;
+using Microsoft.EntityFrameworkCore;
 
 namespace Foodieland.Infrastructure.Persistence.Repositories;
 
@@ -13,19 +14,19 @@ public class UserRepository : IUserRepository
         _dbContext = dbContext;
     }
     
-    public User? GetUserByEmail(string email)
+    public async Task<User?> GetUserByEmail(string email)
     {
-        return _dbContext.Users.FirstOrDefault(u => u.Email == email);
+        return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
     }
 
-    public User? GetUserById(UserId userId)
+    public async Task<User?> GetUserById(UserId userId)
     {
-        return _dbContext.Users.Find(userId);
+        return await _dbContext.Users.FindAsync(userId);
     }
 
-    public void AddUser(User user)
+    public async Task AddUser(User user)
     {
-        _dbContext.Users.Add(user);
+        await _dbContext.Users.AddAsync(user);
     }
 
     public void DeleteUser(User user)

@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Foodieland.Application.Users.Commands;
+namespace Foodieland.Application.Users.Commands.DeleteUser;
 
 public class DeleteUserCommandValidator : AbstractValidator<DeleteUserCommand>
 {

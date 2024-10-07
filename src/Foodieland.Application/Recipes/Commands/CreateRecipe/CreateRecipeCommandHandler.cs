@@ -26,7 +26,7 @@ public class CreateRecipeCommandHandler : IRequestHandler<CreateRecipeCommand, E
 
     public async Task<ErrorOr<Recipe>> Handle(CreateRecipeCommand request, CancellationToken cancellationToken)
     {
-        var recipeCreator = _userRepository.GetUserById(UserId.Create(request.CreatorId));
+        var recipeCreator = await _userRepository.GetUserById(UserId.Create(request.CreatorId));
 
         if (recipeCreator is null)
         {
@@ -55,7 +55,7 @@ public class CreateRecipeCommandHandler : IRequestHandler<CreateRecipeCommand, E
         
         recipeCreator.AddRecipe(recipe.Id);
         
-        _recipeRepository.AddRecipe(recipe);
+        await _recipeRepository.AddRecipe(recipe);
         
         await _unitOfWork.SaveChangesAsync(cancellationToken);
         

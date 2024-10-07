@@ -3,7 +3,7 @@ using Foodieland.Application.Common.Interfaces.Persistence;
 using Foodieland.Domain.Common.Errors;
 using MediatR;
 
-namespace Foodieland.Application.Users.Commands;
+namespace Foodieland.Application.Users.Commands.DeleteUser;
 
 public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, ErrorOr<Unit>>
 {
@@ -22,7 +22,7 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Error
 
     public async Task<ErrorOr<Unit>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
     {
-        var user = _userRepository.GetUserById(request.UserId);
+        var user = await _userRepository.GetUserById(request.UserId);
 
         if (user is null)
         {
