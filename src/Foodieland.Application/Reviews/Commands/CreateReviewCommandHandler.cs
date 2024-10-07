@@ -44,6 +44,13 @@ public class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommand, E
             return Errors.Recipe.NotFound;
         }
         
+        var existingReview = _reviewRepository.GetUserReviewForRecipe(reviewedRecipe.Id, reviewCreator.Id);
+
+        if (existingReview is not null)
+        {
+            return Errors.Review.DuplicateReview;
+        }
+        
         var review = Review.Create(
             recipeId: reviewedRecipe.Id, 
             creatorId: reviewCreator.Id, 
