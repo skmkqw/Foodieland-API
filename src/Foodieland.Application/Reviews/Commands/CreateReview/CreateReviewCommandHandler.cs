@@ -4,7 +4,7 @@ using Foodieland.Domain.Common.Errors;
 using Foodieland.Domain.ReviewAggregate;
 using MediatR;
 
-namespace Foodieland.Application.Reviews.Commands;
+namespace Foodieland.Application.Reviews.Commands.CreateReview;
 
 public class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommand, ErrorOr<Review>>
 {

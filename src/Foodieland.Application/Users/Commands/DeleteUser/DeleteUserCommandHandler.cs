@@ -3,7 +3,7 @@ using Foodieland.Application.Common.Interfaces.Persistence;
 using Foodieland.Domain.Common.Errors;
 using MediatR;
 
-namespace Foodieland.Application.Users.Commands;
+namespace Foodieland.Application.Users.Commands.DeleteUser;
 
 public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, ErrorOr<Unit>>
 {
