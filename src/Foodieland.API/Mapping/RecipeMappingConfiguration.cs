@@ -42,7 +42,7 @@ public class RecipeMappingConfiguration : IRegister
         
         config.NewConfig<PagedResult<Recipe>, GetRecipesResponse>()
             .Map(dest => dest.Recipes, src => src.Items)
-            .Map(dest => dest.Pagination, src => new Pagination(
+            .Map(dest => dest.PaginationResponse, src => new PaginationResponse(
                 src.Page, 
                 src.PageSize, 
                 src.TotalCount));

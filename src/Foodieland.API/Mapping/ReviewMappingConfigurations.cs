@@ -43,7 +43,7 @@ public class ReviewMappingConfigurations : IRegister
         //PagedResult<Review> => GetReviewsResponse
         config.NewConfig<PagedResult<Review>, GetReviewsResponse>()
             .Map(dest => dest.Reviews, src => src.Items)
-            .Map(dest => dest.Pagination, src => new Pagination(
+            .Map(dest => dest.PaginationResponse, src => new PaginationResponse(
                 src.Page, 
                 src.PageSize, 
                 src.TotalCount));

@@ -3,5 +3,5 @@ using Foodieland.Contracts.Recipes.GetRecipe;
 
 namespace Foodieland.Contracts.Recipes.GetRecipes;
 
-public record GetRecipesResponse(List<GetRecipeResponse> Recipes, Pagination Pagination);
+public record GetRecipesResponse(List<GetRecipeResponse> Recipes, PaginationResponse PaginationResponse);
 
