@@ -1,5 +1,6 @@
 using Foodieland.Application.Reviews.Commands.CreateReview;
 using Foodieland.Application.Reviews.Queries.GetRecipeReviews;
+using Foodieland.Application.Reviews.Queries.GetUserReviews;
 using Foodieland.Contracts.Common;
 using Foodieland.Contracts.Reviews.CreateReview;
 using Foodieland.Contracts.Reviews.GetReviews;
@@ -32,6 +33,19 @@ public class ReviewsController : ApiController
         var getRecipeReviewsResult = await _mediator.Send(query);
         
         return getRecipeReviewsResult.Match(
+            onValue: recipe => Ok(_mapper.Map<GetReviewsResponse>(recipe)),
+            onError: errors => Problem(errors));
+    }
+
+    [AllowAnonymous]
+    [HttpGet("users/{userId}")]
+    public async Task<IActionResult> GetUserReviews([FromRoute] Guid userId, [FromQuery] PagedResultRequest queryParams)
+    {
+        var query = _mapper.Map<GetUserReviewsQuery>((userId, queryParams));
+        
+        var getUserReviewsResult = await _mediator.Send(query);
+        
+        return getUserReviewsResult.Match(
             onValue: recipe => Ok(_mapper.Map<GetReviewsResponse>(recipe)),
             onError: errors => Problem(errors));
     }
