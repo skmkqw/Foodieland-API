@@ -11,5 +11,7 @@ public interface IReviewRepository
     
     Task<PagedResult<Review>> GetRecipeReviews(RecipeId recipeId, int page, int pageSize);
     
+    Task<PagedResult<Review>> GetUserReviews(UserId userId, int page, int pageSize);
+    
     Task<Review?> GetUserReviewForRecipe(RecipeId recipeId, UserId userId);
 }
