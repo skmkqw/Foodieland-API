@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Foodieland.API.Controllers;
 
+[Route("recipes")]
 public class RecipesController : ApiController
 {
     private readonly IMapper _mapper;
@@ -28,7 +29,7 @@ public class RecipesController : ApiController
     }
 
     [AllowAnonymous]
-    [HttpGet("/recipes/{recipeId}")]
+    [HttpGet("{recipeId}")]
     public async Task<IActionResult> GetRecipeById([FromRoute] Guid recipeId)
     {
         var query =_mapper.Map<GetRecipeQuery>(recipeId);
@@ -41,7 +42,7 @@ public class RecipesController : ApiController
     }
     
     [AllowAnonymous]
-    [HttpGet("/recipes")]
+    [HttpGet]
     public async Task<IActionResult> GetRecipes([FromQuery] PagedResultRequest request)
     {
         var query = _mapper.Map<GetRecipesQuery>(request);
@@ -52,7 +53,7 @@ public class RecipesController : ApiController
     }
 
     [AllowAnonymous]
-    [HttpGet("/users/{userId}/recipes")]
+    [HttpGet("users/{userId}")]
     public async Task<IActionResult> GetUserRecipes([FromRoute] Guid userId, [FromQuery] PagedResultRequest queryParams)
     {
         var query = _mapper.Map<GetUserRecipesQuery>((userId, queryParams));
@@ -64,7 +65,7 @@ public class RecipesController : ApiController
             onError: errors => Problem(errors));
     }
 
-    [HttpPost("/recipes")]
+    [HttpPost]
     public async Task<IActionResult> CreateRecipe([FromBody] CreateOrUpdateRecipeRequest request)
     {
         var userId = GetUserId();
@@ -82,7 +83,7 @@ public class RecipesController : ApiController
             onError: errors => Problem(errors));
     }
 
-    [HttpPut("/recipes/{recipeId}")]
+    [HttpPut("{recipeId}")]
     public async Task<IActionResult> UpdateRecipe([FromRoute] Guid recipeId, [FromBody] CreateOrUpdateRecipeRequest request)
     {
         var userId = GetUserId();
@@ -100,7 +101,7 @@ public class RecipesController : ApiController
             onError: errors => Problem(errors));
     }
 
-    [HttpDelete("/recipes/{recipeId}")]
+    [HttpDelete("{recipeId}")]
     public async Task<IActionResult> DeleteRecipe([FromRoute] Guid recipeId)
     {
         var userId = GetUserId();

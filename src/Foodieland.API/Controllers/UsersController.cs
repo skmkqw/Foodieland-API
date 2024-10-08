@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Foodieland.API.Controllers;
 
+[Route("users")]
 public class UsersController : ApiController
 {
     private readonly IMapper _mapper;
@@ -17,7 +18,7 @@ public class UsersController : ApiController
         _mediator = mediator;
     }
     
-    [HttpDelete("/users/{userId}")]
+    [HttpDelete("{userId}")]
     public async Task<IActionResult> DeleteRecipe([FromRoute] Guid userId)
     {
         var userIdFromClaim = GetUserId();

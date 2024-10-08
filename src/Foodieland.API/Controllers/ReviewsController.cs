@@ -37,7 +37,7 @@ public class ReviewsController : ApiController
     }
 
 
-    [HttpPost("recipe/{recipeId}")]
+    [HttpPost("recipes/{recipeId}")]
     public async Task<IActionResult> CreateReview([FromRoute] Guid recipeId, [FromBody] CreateReviewRequest request)
     {
         var userId = GetUserId();
