@@ -2,6 +2,7 @@ using Foodieland.Application.Common.Models;
 using Foodieland.Application.Reviews.Commands;
 using Foodieland.Application.Reviews.Commands.CreateReview;
 using Foodieland.Application.Reviews.Queries.GetRecipeReviews;
+using Foodieland.Application.Reviews.Queries.GetUserReviews;
 using Foodieland.Contracts.Common;
 using Foodieland.Contracts.Reviews.CreateReview;
 using Foodieland.Contracts.Reviews.GetReview;
@@ -32,6 +33,11 @@ public class ReviewMappingConfigurations : IRegister
         //Guid, PagedResultRequest => GetRecipeReviewsRequest
         config.NewConfig<(Guid recipeId, PagedResultRequest request), GetRecipeReviewsQuery>()
             .Map(dest => dest.RecipeId, src => RecipeId.Create(src.recipeId))
+            .Map(dest => dest, src => src.request);
+        
+        //Guid, PagedResultRequest => GetUserReviewsRequest
+        config.NewConfig<(Guid userId, PagedResultRequest request), GetUserReviewsQuery>()
+            .Map(dest => dest.UserId, src => UserId.Create(src.userId))
             .Map(dest => dest, src => src.request);
         
         //Review => GetReviewResponse
