@@ -1,4 +1,5 @@
 using Foodieland.Application.Reviews.Commands.CreateReview;
+using Foodieland.Application.Reviews.Commands.DeleteReview;
 using Foodieland.Application.Reviews.Commands.UpdateReview;
 using Foodieland.Application.Reviews.Queries.GetRecipeReviews;
 using Foodieland.Application.Reviews.Queries.GetReview;
@@ -100,6 +101,24 @@ public class ReviewsController : ApiController
         
         return updateReviewResult.Match(
             onValue: review => Ok(_mapper.Map<CreateOrUpdateReviewResponse>(review)),
+            onError: errors => Problem(errors));
+    }
+
+    [HttpDelete("{reviewId}")]
+    public async Task<IActionResult> DeleteReview([FromRoute] Guid reviewId)
+    {
+        var userId = GetUserId();
+        if (!userId.HasValue)
+        {
+            return UnauthorizedUserIdProblem();
+        }
+        
+        var command = _mapper.Map<DeleteReviewCommand>((reviewId, userId));
+        
+        var deleteReviewResult = await _mediator.Send(command);
+
+        return deleteReviewResult.Match(
+            onValue: _ => NoContent(),
             onError: errors => Problem(errors));
     }
 }
