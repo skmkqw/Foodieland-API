@@ -7,7 +7,7 @@ namespace Foodieland.Application.Common.Interfaces.Persistence;
 
 public interface IReviewRepository
 {
-    Task AddReview(Review review);
+    Task<Review?> GetReviewById(ReviewId reviewId);
     
     Task<PagedResult<Review>> GetRecipeReviews(RecipeId recipeId, int page, int pageSize);
     

@@ -16,9 +16,9 @@ public class ReviewRepository : IReviewRepository
         _dbContext = dbContext;
     }
 
-    public async Task AddReview(Review review)
+    public async Task<Review?> GetReviewById(ReviewId reviewId)
     {
-        await _dbContext.Reviews.AddAsync(review);
+        return await _dbContext.Reviews.FindAsync(reviewId);
     }
 
     public async Task<PagedResult<Review>> GetRecipeReviews(RecipeId recipeId, int page, int pageSize)
