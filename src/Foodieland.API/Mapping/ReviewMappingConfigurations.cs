@@ -3,6 +3,7 @@ using Foodieland.Application.Reviews.Commands;
 using Foodieland.Application.Reviews.Commands.CreateReview;
 using Foodieland.Application.Reviews.Commands.UpdateReview;
 using Foodieland.Application.Reviews.Queries.GetRecipeReviews;
+using Foodieland.Application.Reviews.Queries.GetReview;
 using Foodieland.Application.Reviews.Queries.GetUserReviews;
 using Foodieland.Contracts.Common;
 using Foodieland.Contracts.Reviews.CreateOrUpdateReview;
@@ -20,6 +21,10 @@ public class ReviewMappingConfigurations : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
+        //Guid => GetReviewQuery
+        config.NewConfig<Guid, GetReviewQuery>()
+            .Map(dest => dest.ReviewId, src => ReviewId.Create(src));
+        
         //Guid, Guid, CreateOrUpdateReviewRequest => CreateReviewCommand
         config.NewConfig<(Guid recipeId, Guid? creatorId, CreateOrUpdateReviewRequest request), CreateReviewCommand>()
             .Map(dest => dest.CreatorId, src => UserId.Create(src.creatorId!.Value))

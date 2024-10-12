@@ -1,9 +1,11 @@
 using Foodieland.Application.Reviews.Commands.CreateReview;
 using Foodieland.Application.Reviews.Commands.UpdateReview;
 using Foodieland.Application.Reviews.Queries.GetRecipeReviews;
+using Foodieland.Application.Reviews.Queries.GetReview;
 using Foodieland.Application.Reviews.Queries.GetUserReviews;
 using Foodieland.Contracts.Common;
 using Foodieland.Contracts.Reviews.CreateOrUpdateReview;
+using Foodieland.Contracts.Reviews.GetReview;
 using Foodieland.Contracts.Reviews.GetReviews;
 using MapsterMapper;
 using MediatR;
@@ -26,6 +28,19 @@ public class ReviewsController : ApiController
     }
 
     [AllowAnonymous]
+    [HttpGet("{reviewId}")]
+    public async Task<IActionResult> GetReview([FromRoute] Guid reviewId)
+    {
+        var query = _mapper.Map<GetReviewQuery>(reviewId);
+        
+        var getReviewResult = await _mediator.Send(query);
+
+        return getReviewResult.Match(
+            onValue: review => Ok(_mapper.Map<GetReviewResponse>(review)),
+            onError: errors => Problem(errors));
+    }
+
+    [AllowAnonymous]
     [HttpGet("recipes/{recipeId}")]
     public async Task<IActionResult> GetRecipeReviews([FromRoute] Guid recipeId, [FromQuery] PagedResultRequest queryParams)
     {
@@ -34,7 +49,7 @@ public class ReviewsController : ApiController
         var getRecipeReviewsResult = await _mediator.Send(query);
         
         return getRecipeReviewsResult.Match(
-            onValue: recipe => Ok(_mapper.Map<GetReviewsResponse>(recipe)),
+            onValue: reviews => Ok(_mapper.Map<GetReviewsResponse>(reviews)),
             onError: errors => Problem(errors));
     }
 
@@ -47,7 +62,7 @@ public class ReviewsController : ApiController
         var getUserReviewsResult = await _mediator.Send(query);
         
         return getUserReviewsResult.Match(
-            onValue: recipe => Ok(_mapper.Map<GetReviewsResponse>(recipe)),
+            onValue: reviews => Ok(_mapper.Map<GetReviewsResponse>(reviews)),
             onError: errors => Problem(errors));
     }
 
