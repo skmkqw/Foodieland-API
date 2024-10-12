@@ -30,7 +30,7 @@ public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TReques
                 .Select(e => Error.Validation(e.PropertyName, e.ErrorMessage))
                 .ToList();
 
-            return (dynamic)ErrorOr<TResponse>.From(errors);
+            return (dynamic)errors;
         }
 
         return await next();
