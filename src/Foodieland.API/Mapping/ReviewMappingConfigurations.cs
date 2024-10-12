@@ -1,14 +1,16 @@
 using Foodieland.Application.Common.Models;
 using Foodieland.Application.Reviews.Commands;
 using Foodieland.Application.Reviews.Commands.CreateReview;
+using Foodieland.Application.Reviews.Commands.UpdateReview;
 using Foodieland.Application.Reviews.Queries.GetRecipeReviews;
 using Foodieland.Application.Reviews.Queries.GetUserReviews;
 using Foodieland.Contracts.Common;
-using Foodieland.Contracts.Reviews.CreateReview;
+using Foodieland.Contracts.Reviews.CreateOrUpdateReview;
 using Foodieland.Contracts.Reviews.GetReview;
 using Foodieland.Contracts.Reviews.GetReviews;
 using Foodieland.Domain.RecipeAggregate.ValueObjects;
 using Foodieland.Domain.ReviewAggregate;
+using Foodieland.Domain.ReviewAggregate.ValueObjects;
 using Foodieland.Domain.UserAggregate.ValueObjects;
 using Mapster;
 
@@ -18,14 +20,20 @@ public class ReviewMappingConfigurations : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        //Guid, Guid, CreateReviewRequest => CreateReviewCommand
-        config.NewConfig<(Guid recipeId, Guid? creatorId, CreateReviewRequest request), CreateReviewCommand>()
+        //Guid, Guid, CreateOrUpdateReviewRequest => CreateReviewCommand
+        config.NewConfig<(Guid recipeId, Guid? creatorId, CreateOrUpdateReviewRequest request), CreateReviewCommand>()
             .Map(dest => dest.CreatorId, src => UserId.Create(src.creatorId!.Value))
             .Map(dest => dest.RecipeId, src => RecipeId.Create(src.recipeId))
             .Map(dest => dest, src => src.request);
         
-        //Review => CreateReviewResponse
-        config.NewConfig<Review, CreateReviewResponse>()
+        //Guid, Guid, CreateOrUpdateReviewRequest => UpdateReviewCommand
+        config.NewConfig<(Guid recipeId, Guid? creatorId, CreateOrUpdateReviewRequest request), UpdateReviewCommand>()
+            .Map(dest => dest.UserId, src => UserId.Create(src.creatorId!.Value))
+            .Map(dest => dest.ReviewId, src => ReviewId.Create(src.recipeId))
+            .Map(dest => dest, src => src.request);
+        
+        //Review => CreateOrUpdateReviewResponse
+        config.NewConfig<Review, CreateOrUpdateReviewResponse>()
             .Map(dest => dest.Id, src => src.Id.Value)
             .Map(dest => dest.RecipeId, src => src.RecipeId.Value)
             .Map(dest => dest.CreatorId, src => src.CreatorId.Value);

@@ -1,8 +1,9 @@
 using Foodieland.Application.Reviews.Commands.CreateReview;
+using Foodieland.Application.Reviews.Commands.UpdateReview;
 using Foodieland.Application.Reviews.Queries.GetRecipeReviews;
 using Foodieland.Application.Reviews.Queries.GetUserReviews;
 using Foodieland.Contracts.Common;
-using Foodieland.Contracts.Reviews.CreateReview;
+using Foodieland.Contracts.Reviews.CreateOrUpdateReview;
 using Foodieland.Contracts.Reviews.GetReviews;
 using MapsterMapper;
 using MediatR;
@@ -52,7 +53,7 @@ public class ReviewsController : ApiController
 
 
     [HttpPost("recipes/{recipeId}")]
-    public async Task<IActionResult> CreateReview([FromRoute] Guid recipeId, [FromBody] CreateReviewRequest request)
+    public async Task<IActionResult> CreateReview([FromRoute] Guid recipeId, [FromBody] CreateOrUpdateReviewRequest request)
     {
         var userId = GetUserId();
         if (!userId.HasValue)
@@ -65,7 +66,25 @@ public class ReviewsController : ApiController
         var createReviewResult = await _mediator.Send(command);
         
         return createReviewResult.Match(
-            onValue: recipe => Ok(_mapper.Map<CreateReviewResponse>(recipe)),
+            onValue: review => Ok(_mapper.Map<CreateOrUpdateReviewResponse>(review)),
+            onError: errors => Problem(errors));
+    }
+
+    [HttpPut("{reviewId}")]
+    public async Task<IActionResult> UpdateReview([FromRoute] Guid reviewId, [FromBody] CreateOrUpdateReviewRequest request)
+    {
+        var userId = GetUserId();
+        if (!userId.HasValue)
+        {
+            return UnauthorizedUserIdProblem();
+        }
+
+        var command = _mapper.Map<UpdateReviewCommand>((reviewId, userId, request));
+        
+        var updateReviewResult = await _mediator.Send(command);
+        
+        return updateReviewResult.Match(
+            onValue: review => Ok(_mapper.Map<CreateOrUpdateReviewResponse>(review)),
             onError: errors => Problem(errors));
     }
 }
