@@ -1,6 +1,7 @@
 using Foodieland.Application.Common.Models;
 using Foodieland.Application.Reviews.Commands;
 using Foodieland.Application.Reviews.Commands.CreateReview;
+using Foodieland.Application.Reviews.Commands.DeleteReview;
 using Foodieland.Application.Reviews.Commands.UpdateReview;
 using Foodieland.Application.Reviews.Queries.GetRecipeReviews;
 using Foodieland.Application.Reviews.Queries.GetReview;
@@ -66,5 +67,10 @@ public class ReviewMappingConfigurations : IRegister
                 src.Page, 
                 src.PageSize, 
                 src.TotalCount));
+        
+        //Guid, Guid => DeleteReviewCommand
+        config.NewConfig<(Guid reviewId, Guid? userId), DeleteReviewCommand>()
+            .Map(dest => dest.ReviewId, src => ReviewId.Create(src.reviewId))
+            .Map(dest => dest.UserId, src => UserId.Create(src.userId!.Value));
     }
 }
