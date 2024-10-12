@@ -11,9 +11,9 @@ public sealed class Review : AggregateRoot<ReviewId>
 
     public UserId CreatorId { get; }
 
-    public string Content { get; }
+    public string Content { get; private set; }
 
-    public int Rating { get; }
+    public int Rating { get; private set; }
     
     private Review(
         ReviewId id, 
@@ -36,5 +36,11 @@ public sealed class Review : AggregateRoot<ReviewId>
             creatorId,
             content, 
             rating);
+    }
+
+    public void Update(string content, int rating)
+    {
+        Content = content;
+        Rating = rating;
     }
 }
