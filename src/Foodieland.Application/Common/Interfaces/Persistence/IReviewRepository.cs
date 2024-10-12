@@ -19,4 +19,6 @@ public interface IReviewRepository
     Task AddReview(Review review);
     
     void UpdateReview(Review review);
+    
+    void DeleteReview(Review review);
 }

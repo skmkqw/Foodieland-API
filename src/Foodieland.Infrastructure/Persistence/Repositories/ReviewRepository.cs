@@ -60,4 +60,9 @@ public class ReviewRepository : IReviewRepository
     {
         _dbContext.Reviews.Update(review);
     }
+
+    public void DeleteReview(Review review)
+    {
+        _dbContext.Reviews.Remove(review);
+    }
 }
