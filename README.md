@@ -9,5 +9,8 @@ This API is the backend component of FoodieLand, a platform designed for food en
 - Database: Microsoft SQL Server (MSSQL)
 - Authentication: JWT (JSON Web Tokens)
 
+### Links
+[Frontend repoistory](https://github.com/skmkqw/Foodieland) 
+
 ### License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
