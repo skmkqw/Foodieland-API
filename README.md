@@ -11,7 +11,7 @@ This API is the backend component of FoodieLand, a platform designed for food en
 
 # Endpoints
 
-## **AuthenticationController**
+# **AuthenticationController**
 
 ### Base URL:
 `/auth`
@@ -49,6 +49,8 @@ This API is the backend component of FoodieLand, a platform designed for food en
 }
 ```
 
+---
+
 ### 1. POST /auth/login
 
 ### Request:
@@ -72,6 +74,31 @@ This API is the backend component of FoodieLand, a platform designed for food en
   "token": "string"
 }
 ```
+---
+
+# **UserController**
+
+### Base URL:
+`/users`
+
+### Available Endpoints:
+
+1. **DELETE /users/{userId}**
+
+---
+
+## 1. DELETE /users/{userId}
+
+### Request:
+- **Method**: DELETE
+- **URL**: `/users/{userId}`
+- **Path Parameter**:
+  - `userId`: (GUID) The unique identifier of the user to be deleted.
+
+### Response:
+- No content is returned when the user is successfully deleted.
+
+---
 
 ### Links
 [Frontend repoistory](https://github.com/skmkqw/Foodieland) 
