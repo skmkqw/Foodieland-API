@@ -1,5 +1,5 @@
-## Foodieland-API
-Welcome to the FoodieLand API repository! This backend service powers the FoodieLand web application, enabling users to log in, search, share, and explore recipes from the world's top chefs. The API provides endpoints for managing recipes, user accounts and ratings.
+# Foodieland-API
+This backend service powers the FoodieLand web application, enabling users to log in, search, share, and explore recipes from the world's top chefs. The API provides endpoints for managing recipes, user accounts and ratings.
 
 ### Overview
 This API is the backend component of FoodieLand, a platform designed for food enthusiasts to discover and recreate gourmet dishes at home. The API supports various features such as recipe search, user authentication, and interactions like ratings and reviews.
@@ -418,8 +418,182 @@ This API is the backend component of FoodieLand, a platform designed for food en
 ### Response:
 No content is returned when the recipe is successfully deleted.
 
-### Links
+---
+
+# **ReviewController**
+
+### Base URL:
+`/reviews`
+
+### Available Endpoints:
+
+1. **GET /reviews/{reviewId}**  
+2. **GET /reviews/recipes/{recipeId}**  
+3. **GET /reviews/users/{userId}**  
+4. **POST /reviews/recipes/{recipeId}**  
+5. **PUT /reviews/{reviewId}**  
+6. **DELETE /reviews/{reviewId}**
+
+---
+
+### 1. GET /reviews/{reviewId}
+
+### Request:
+- **Method**: GET  
+- **URL**: `/reviews/{reviewId}`  
+- **Path Parameter**:
+  - `reviewId`: (GUID) The unique identifier of the review.
+
+### Response:
+```json
+{
+  "id": "string",
+  "recipeId": "string",
+  "creatorId": "string",
+  "rating": 0,
+  "content": "string"
+}
+```
+
+---
+
+### 2. GET /reviews/recipes/{recipeId}
+
+### Request:
+- **Method**: GET  
+- **URL**: `/reviews/recipes/{recipeId}`  
+- **Path Parameter**:
+  - `recipeId`: (GUID) The unique identifier of the recipe for which to fetch reviews.
+- **Query Parameter**:
+  - `page`: (int) The page number for pagination (default is 1).
+  - `pageSize`: (integer) The number of recipes per page (default is 10).
+
+### Response:
+```json
+{
+  "reviews": [
+    {
+      "id": "string",
+      "recipeId": "string",
+      "creatorId": "string",
+      "rating": 0,
+      "content": "string"
+    }
+  ],
+  "paginationResponse": {
+    "page": 1,
+    "pageSize": 10,
+    "totalCount": 100
+  }
+}
+```
+
+---
+
+### 3. GET /reviews/users/{userId}
+
+### Request:
+- **Method**: GET  
+- **URL**: `/reviews/users/{userId}`  
+- **Path Parameter**:
+  - `userId`: (GUID) The unique identifier of the user whose reviews are to be fetched.
+- **Query Parameter**:
+  - `page`: (int) The page number for pagination (default is 1).
+  - `pageSize`: (integer) The number of recipes per page (default is 10).
+
+### Response:
+```json
+{
+  "reviews": [
+    {
+      "id": "string",
+      "recipeId": "string",
+      "creatorId": "string",
+      "rating": 0,
+      "content": "string"
+    }
+  ],
+  "paginationResponse": {
+    "page": 1,
+    "pageSize": 10,
+    "totalCount": 50
+  }
+}
+```
+
+---
+
+### 4. POST /reviews/recipes/{recipeId}
+
+### Request:
+- **Method**: POST  
+- **URL**: `/reviews/recipes/{recipeId}`  
+- **Path Parameter**:
+  - `reviewId`: (GUID) The unique identifier of the recipe to which the review belongs.
+- **Request body** (JSON format)
+```json
+{
+  "content": "string",
+  "rating": 5
+}
+```
+
+### Response:
+```json
+{
+  "id": "string",
+  "recipeId": "string",
+  "creatorId": "string",
+  "content": "string",
+  "rating": 5
+}
+```
+
+---
+
+### 5. PUT /reviews/{reviewId}
+
+### Request:
+- **Method**: PUT  
+- **URL**: `/reviews/{reviewId}`  
+- **Path Parameter**:
+  - `reviewId`: (GUID) The unique identifier of the review to be updated.
+- **Request body** (JSON format)
+```json
+{
+  "content": "string",
+  "rating": 5
+}
+```
+
+### Response:
+```json
+{
+  "id": "string",
+  "recipeId": "string",
+  "creatorId": "string",
+  "content": "string",
+  "rating": 4
+}
+```
+
+---
+
+### 6. DELETE /reviews/{reviewId}
+
+### Request:
+- **Method**: DELETE  
+- **URL**: `/reviews/{reviewId}`  
+- **Path Parameter**:
+  - `reviewId`: (GUID) The unique identifier of the review to be deleted.
+
+### Response:
+- No content returned upon successful deletion (204 No Content).
+
+---
+
+## Links
 [Frontend repoistory](https://github.com/skmkqw/Foodieland) 
 
-### License
+## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
