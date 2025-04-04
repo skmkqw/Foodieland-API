@@ -9,6 +9,70 @@ This API is the backend component of FoodieLand, a platform designed for food en
 - Database: Microsoft SQL Server (MSSQL)
 - Authentication: JWT (JSON Web Tokens)
 
+# Endpoints
+
+## **AuthenticationController**
+
+### Base URL:
+`/auth`
+
+### Available Endpoints:
+
+1. **POST /auth/register**
+2. **POST /auth/login**
+
+---
+
+### 1. POST /auth/register
+
+### Request:
+- **Method**: POST
+- **URL**: `/auth/register`
+
+```json
+{
+  "firstName": "string",
+  "lastName": "string",
+  "email": "string",
+  "password": "string"
+}
+```
+
+### Response
+```json
+{
+  "id": "guid",
+  "firstName": "string",
+  "lastName": "string",
+  "email": "string",
+  "token": "string"
+}
+```
+
+### 1. POST /auth/login
+
+### Request:
+- **Method**: POST
+- **URL**: `/auth/login`
+
+```json
+{
+  "email": "string",
+  "password": "string"
+}
+```
+
+### Response
+```json
+{
+  "id": "guid",
+  "firstName": "string",
+  "lastName": "string",
+  "email": "string",
+  "token": "string"
+}
+```
+
 ### Links
 [Frontend repoistory](https://github.com/skmkqw/Foodieland) 
 
