@@ -19,7 +19,7 @@ public class UsersController : ApiController
     }
     
     [HttpDelete("{userId}")]
-    public async Task<IActionResult> DeleteRecipe([FromRoute] Guid userId)
+    public async Task<IActionResult> DeleteUser([FromRoute] Guid userId)
     {
         var userIdFromClaim = GetUserId();
         if (!userIdFromClaim.HasValue)
