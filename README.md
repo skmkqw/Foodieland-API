@@ -9,6 +9,12 @@ This API is the backend component of FoodieLand, a platform designed for food en
 - Database: Microsoft SQL Server (MSSQL)
 - Authentication: JWT (JSON Web Tokens)
 
+## Features
+- User authentication: JWT-based login & registration
+- Recipe management: create, update & delete recipes
+- Review management: create, update & delete reviews
+- Querying recipes & reviews: fetch resources for specific users, supports pagination
+
 # Endpoints
 
 # **AuthenticationController**
